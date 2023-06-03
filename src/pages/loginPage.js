@@ -1,15 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import LoginContentWrapper from "../components/loginContent/loginContentWrapper";
 import LoginLogoWrapper from "../components/loginContent/loginLogoWrapper";
 import { styled } from "styled-components";
 
-const LoginPage = (onLogin) => {
+const LoginPage = ({ onLogin }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = () => {
         // 로그인 처리 로직...
-        onLogin(); // 로그인 성공 시 상태 변경을 위한 콜백 함수 호출
+        const user = {
+            // 로그인한 사용자 정보
+        };
+        dispatch(loginSuccess(user)); // 로그인 성공 시 상태 업데이트
         navigate("/");
     };
 
