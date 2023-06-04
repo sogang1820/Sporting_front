@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../src/fonts/Jua/Jua-Regular.ttf') format('truetype');
+  /* 추가적인 폰트 스타일 설정 */
+}
+
+body {
+  font-family: 'MyCustomFont', sans-serif;
+}
