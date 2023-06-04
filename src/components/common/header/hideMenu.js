@@ -1,28 +1,21 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import HideMenuImg from "../../../assets/img/hamburger_menu.png";
 
-const HideMenu = () => {
-<<<<<<< Updated upstream
-=======
+const HideMenu = ({ isLoggedIn, onLogout }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
+    console.log("hello");
 
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
+        toggleMenu(); // 메뉴 숨기기
+        onLogout(); // 로그아웃 처리
     };
-
-    const handleLogout = () => {
-        // 로그아웃 처리 로직을 구현하세요
-        // 예시: 로그아웃 시 필요한 작업을 수행하는 함수를 호출하거나 상태를 업데이트합니다.
-        console.log("로그아웃되었습니다.");
-    };
->>>>>>> Stashed changes
     return (
         <>
             <HideMenuWrap>
-                <HideMenuIcon />
+                <HideMenuIcon onClick={toggleMenu} />
             </HideMenuWrap>
-<<<<<<< Updated upstream
-=======
             {isMenuVisible && (
                 <MenuContent>
                     <MenuText>Menu</MenuText>
@@ -32,11 +25,10 @@ const HideMenu = () => {
                     <Futsal>풋살</Futsal>
                     <MenuBottom>
                         <MenuMyPage>My Page</MenuMyPage>
-                        <MenuLogOut onClick={handleLogout}>로그아웃</MenuLogOut>
+                        <MenuLogOut>로그아웃</MenuLogOut>
                     </MenuBottom>
                 </MenuContent>
             )}
->>>>>>> Stashed changes
         </>
     );
 };
@@ -59,8 +51,6 @@ const HideMenuIcon = styled.div`
         opacity: 0.6;
     }
 `;
-<<<<<<< Updated upstream
-=======
 
 const MenuContent = styled.div`
     z-index: 1;
@@ -131,4 +121,3 @@ const MenuLogOut = styled.div`
     cursor: pointer;
     margin: 1rem;
 `;
->>>>>>> Stashed changes

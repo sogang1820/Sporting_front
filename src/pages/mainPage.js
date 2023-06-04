@@ -5,7 +5,7 @@ import MainContentWrapper from "../components/mainContent/mainContentWrapper";
 const MainPage = ({ isLoggedIn, onLogout }) => {
     return (
         <div>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} onLogout={onLogout}/>
             <MainContentWrapper isLoggedIn={isLoggedIn} onLogout={onLogout}/>
         </div>
     );

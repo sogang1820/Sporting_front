@@ -23,7 +23,12 @@ const App = () => {
                 <Routes>
                     <Route
                         path="/"
-                        element={<Main isLoggedIn={isLoggedIn} />}
+                        element={
+                            <Main
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />
+                        }
                     />
                     <Route
                         path="/login"

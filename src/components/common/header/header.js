@@ -7,7 +7,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
     return (
         <>
             <HeaderWrap>
-                <TopLeftHeader />
+                <TopLeftHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
                 <TopRightHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
             </HeaderWrap>
         </>
