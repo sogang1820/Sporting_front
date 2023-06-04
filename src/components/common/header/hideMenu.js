@@ -18,6 +18,7 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
     const handleLogout = () => {
         dispatch(logoutSuccess());
         setMenuVisible(!isMenuVisible);
+        navigate("/");
     };
     const handleMenuMyPageClick = () => {
         navigate("/mypage");
