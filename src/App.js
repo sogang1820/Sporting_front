@@ -7,6 +7,7 @@ import Signup from "./pages/signupPage";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./redux/actions/authActions";
 import axios from "axios";
+import MyPage from "./pages/myPage";
 
 const App = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -59,6 +60,16 @@ const App = () => {
                     />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/board" element={<Board />} />
+                    <Route
+                        path="/mypage"
+                        element={
+                            <MyPage
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />
+                        }
+                    />
+
                     {/* 추가적인 페이지 라우트를 설정 */}
                 </Routes>
             </div>
