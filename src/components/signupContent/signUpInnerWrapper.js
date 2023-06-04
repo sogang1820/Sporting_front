@@ -12,14 +12,19 @@ const SignUpInnerWrapper = () => {
     });
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [passwordError, setPasswordError] = useState(false);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUser((prevUser) => ({
             ...prevUser,
             [name]: value,
         }));
+        if (name === "passwordConfirm" && value !== user.password) {
+            setPasswordError(true);
+        } else {
+            setPasswordError(false);
+        }
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
@@ -60,6 +65,21 @@ const SignUpInnerWrapper = () => {
                         onChange={handleChange}
                     />
                 </SignupLabel>
+                <br />
+                <SignupLabelCheck>
+                    <div>비밀번호 확인</div>
+                    <SignUpInput
+                        type="password"
+                        name="passwordConfirm"
+                        value={user.passwordConfirm}
+                        onChange={handleChange}
+                    />
+                    {passwordError && (
+                        <ErrorMessage>
+                            비밀번호가 일치하지 않습니다.
+                        </ErrorMessage>
+                    )}
+                </SignupLabelCheck>
                 <br />
                 <SignupLabel>
                     <div>이름</div>
@@ -134,8 +154,20 @@ const SignupManager = styled.div`
 const SignupLabel = styled.label`
     color: #000055;
     font-weight: 600;
+    height: rem;
 `;
 
+const SignupLabelCheck = styled.label`
+    color: #000055;
+    font-weight: 600;
+    & div{
+        margin: 0;
+    }
+`;
+const ErrorMessage = styled.div`
+    color: red;
+    font-size: 0.7rem;
+`
 const SignUpWrap = styled.input`
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -166,9 +198,6 @@ const SignUpInput = styled.input`
     outline: none;
 `;
 
-const ErrorMessage = styled.p`
-    color: red;
-`;
 
 const SignUpButton = styled.button`
     width: 21.6rem;

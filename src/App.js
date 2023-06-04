@@ -1,19 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Main from "./pages/mainPage";
 import Login from "./pages/loginPage";
 import Board from "./pages/boardPage";
 import Signup from "./pages/signupPage";
+import { useSelector, useDispatch } from "react-redux";
+import { loginSuccess, logoutSuccess } from "./redux/actions/authActions";
+import axios from "axios";
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // 초기 상태는 로그인되지 않은 상태
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const dispatch = useDispatch();
 
-    const handleLogin = () => {
-        setIsLoggedIn(true); // 로그인 성공 시 isLoggedIn 상태를 true로 변경
+    useEffect(() => {
+        const checkLoginStatus = async () => {
+            try {
+                const response = await axios.get("/check-login"); // 로그인 상태 확인하는 API 호출
+                const user = response.data.user;
+                if (user) {
+                    dispatch(loginSuccess(user));
+                } else {
+                    dispatch(logoutSuccess());
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        checkLoginStatus();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleLogin = (user) => {
+        dispatch(loginSuccess(user));
     };
 
     const handleLogout = () => {
-        setIsLoggedIn(false); // 로그아웃 시 isLoggedIn 상태를 false로 변경
+        dispatch(logoutSuccess());
     };
 
     return (
@@ -35,7 +58,7 @@ const App = () => {
                         element={<Login onLogin={handleLogin} />}
                     />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/about" element={<Board />} />
+                    <Route path="/board" element={<Board />} />
                     {/* 추가적인 페이지 라우트를 설정 */}
                 </Routes>
             </div>

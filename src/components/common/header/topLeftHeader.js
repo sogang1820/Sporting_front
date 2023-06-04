@@ -3,11 +3,11 @@ import styled from "styled-components";
 import HeaderLogo from "./headerLogo";
 import HideMenu from "./hideMenu";
 
-const TopLeftHeader = () => {
+const TopLeftHeader = ({ isLoggedIn, onLogout }) => {
     return (
         <>
             <TopLeftHeaderWrap>
-                <HideMenu />
+                <HideMenu isLoggedIn={isLoggedIn} onLogout={onLogout} />
                 <HeaderLogo />
             </TopLeftHeaderWrap>
         </>

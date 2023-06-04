@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { logoutSuccess } from "../../../redux/actions/authActions";
 import styled from "styled-components";
 import HideMenuImg from "../../../assets/img/hamburger_menu.png";
 
 const HideMenu = ({ isLoggedIn, onLogout }) => {
+    const dispatch = useDispatch();
     const [isMenuVisible, setMenuVisible] = useState(false);
-    console.log("hello");
-
+    useEffect(() => {
+        console.log("hideMenu", isLoggedIn);
+        // isLoggedIn 상태가 변경되었을 때 메뉴 가시성을 초기화합니다.
+        setMenuVisible(false);
+    }, [isLoggedIn]);
+    const handleLogout = () => {
+        dispatch(logoutSuccess());
+        setMenuVisible(!isMenuVisible);
+    };
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
-        toggleMenu(); // 메뉴 숨기기
-        onLogout(); // 로그아웃 처리
     };
     return (
         <>
@@ -24,8 +32,16 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
                     <BasketBall>농구</BasketBall>
                     <Futsal>풋살</Futsal>
                     <MenuBottom>
-                        <MenuMyPage>My Page</MenuMyPage>
-                        <MenuLogOut>로그아웃</MenuLogOut>
+                        {isLoggedIn ? (
+                            <>
+                                <MenuMyPage>My Page</MenuMyPage>
+                                <MenuLogOut onClick={handleLogout}>
+                                    로그아웃
+                                </MenuLogOut>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </MenuBottom>
                 </MenuContent>
             )}

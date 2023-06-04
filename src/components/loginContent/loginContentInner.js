@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { loginSuccess } from "../../redux/actions/authActions";
 
-const LoginContentInner = ({ onLogin }) => {
+const LoginContentInner = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [accessToken, setAccessToken] = useState("");
     const navigate = useNavigate();
+    const [accessToken, setAccessToken] = useState("");
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,14 +29,14 @@ const LoginContentInner = ({ onLogin }) => {
                 const data = await response.json();
                 console.log(data);
                 setAccessToken(data.access_token);
+                dispatch(loginSuccess(data.user));
+                console.log({"user data":data.user});
                 navigate("/");
             } else {
-                // 로그인 실패 처리
                 console.error("로그인 실패");
             }
         } catch (error) {
             console.error("로그인 요청 에러:", error);
-            // 에러 처리
         }
     };
 
