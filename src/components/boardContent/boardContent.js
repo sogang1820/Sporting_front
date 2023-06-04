@@ -5,14 +5,11 @@ import styled from 'styled-components';
 const BorderBlock = styled.div`
 width: 85%;
 height: 150px;
-
 position: relative;
 background: #FFFFFF;
 border: 1px solid #000000;
-
 margin: 0 auto;
 padding-left: 50px;
-
 margin-top: 32px;
 display: flex;
 align-items: center;
