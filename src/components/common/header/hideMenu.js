@@ -3,9 +3,12 @@ import { useDispatch } from "react-redux";
 import { logoutSuccess } from "../../../redux/actions/authActions";
 import styled from "styled-components";
 import HideMenuImg from "../../../assets/img/hamburger_menu.png";
+import { useNavigate } from "react-router-dom";
 
 const HideMenu = ({ isLoggedIn, onLogout }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [isMenuVisible, setMenuVisible] = useState(false);
     useEffect(() => {
         console.log("hideMenu", isLoggedIn);
@@ -16,9 +19,13 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
         dispatch(logoutSuccess());
         setMenuVisible(!isMenuVisible);
     };
+    const handleMenuMyPageClick = () => {
+        navigate("/mypage");
+    };
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
+
     return (
         <>
             <HideMenuWrap>
@@ -34,7 +41,9 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
                     <MenuBottom>
                         {isLoggedIn ? (
                             <>
-                                <MenuMyPage>My Page</MenuMyPage>
+                                <MenuMyPage onClick={handleMenuMyPageClick}>
+                                    My Page
+                                </MenuMyPage>
                                 <MenuLogOut onClick={handleLogout}>
                                     로그아웃
                                 </MenuLogOut>
