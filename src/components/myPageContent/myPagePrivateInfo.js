@@ -77,6 +77,7 @@ export default MyPagePrivateInfo;
 const PrivateInfoWrapper = styled.div``;
 
 const MyPageText = styled.div`
+    font-family: GmarketMedium, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,17 +97,16 @@ const PrivateInfoField = styled.div`
     width: 15rem;
     display: flex;
     font-weight: 600;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-right: 2rem;
 `;
 
 const PrivateInfoData = styled.div`
     display: flex;
-    
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    font-size: 2rem;
+    font-size: 1.5rem;
 `;
 const FixInfoWrapper = styled.div`
     text-align: right;
