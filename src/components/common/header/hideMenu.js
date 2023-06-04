@@ -1,12 +1,23 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import HideMenuImg from "../../../assets/img/hamburger_menu.png";
 
 const HideMenu = () => {
+    const [isMenuVisible, setMenuVisible] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuVisible(!isMenuVisible);
+    };
     return (
         <>
             <HideMenuWrap>
-                <HideMenuIcon />
+                <HideMenuIcon onClick={toggleMenu} />
             </HideMenuWrap>
+            {isMenuVisible && (
+                <MenuContent>
+                    <div>Menu</div>
+                </MenuContent>
+            )}
         </>
     );
 };
@@ -28,4 +39,8 @@ const HideMenuIcon = styled.div`
     &:hover {
         opacity: 0.6;
     }
+`;
+
+const MenuContent = styled.div`
+    /* Define the styles for the menu content */
 `;

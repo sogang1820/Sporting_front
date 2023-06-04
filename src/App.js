@@ -58,7 +58,7 @@ const App = () => {
                         element={<Login onLogin={handleLogin} />}
                     />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/about" element={<Board />} />
+                    <Route path="/board" element={<Board />} />
                     {/* 추가적인 페이지 라우트를 설정 */}
                 </Routes>
             </div>
