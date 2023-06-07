@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SearchBlock = styled.div`
-width: 100%;
+width: 90%;
 height: 200px;
 
 background:#F8F6F4;
@@ -20,24 +20,43 @@ align-items: center;
 font-size: 16px
 `
 
+const SelectWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+`;
+
+const SelectBox = styled.select`
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 15px;
+`;
+
 function SearchPage() {
-  const [sport, setSport] = useState('soccer');
+  const [sport, setSport] = useState('baseball');
   const [region, setRegion] = useState('');
   const [reservation, setReservation] = useState('all');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
 
   const handleClickRadioButton1 = (e) => {
-    console.log(e.target.value)
-    setSport(e.target.value)
+    console.log(e.target.value);
+    setSport(e.target.value);
   }
 
   const handleClickRadioButton2 = (e) => {
-    console.log(e.target.value)
-    setReservation(e.target.value)
+    console.log(e.target.value);
+    setReservation(e.target.value);
   }
 
   const handleSelect = (e) => {
-    console.log(e.target.value)
-    setRegion(e.target.value)
+    console.log(e.target.value);
+    setRegion(e.target.value);
   }
 
   return <SearchBlock>
@@ -46,12 +65,11 @@ function SearchPage() {
         &nbsp;&nbsp;&nbsp;&nbsp;
         <input
         type="radio"
-        value="soccer"
-        checked={sport ==="soccer"}
-        defaultChecked="checked"
+        value="baseball"
+        checked={sport ==="baseball"}
         onChange={handleClickRadioButton1}
         />
-        <label> 축구 </label>
+        <label> 야구 </label>
         &nbsp;&nbsp;
         <input
         type="radio"
@@ -70,11 +88,11 @@ function SearchPage() {
         <label> 풋살 </label>
 
         <br/><br/>
-      <label>
+      <SelectWrapper>
         지역
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <select value={region} onChange={handleSelect}>
-          <option value="">선택하세요</option>
+        <SelectBox value={region} onChange={handleSelect}>
+          <option value="NULL">지역</option>
           <option value="서울">서울</option>
           <option value="부산">부산</option>
           <option value="인천">인천</option>
@@ -93,9 +111,9 @@ function SearchPage() {
           <option value="제주">제주</option>
           <option value="세종">세종</option>
 
-        </select>
-      </label>
-      <br/><br/>
+        </SelectBox>
+      </SelectWrapper>
+      <br/>
 
       예약
         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -103,7 +121,6 @@ function SearchPage() {
         type="radio"
         value="all"
         checked={reservation ==="all"}
-        defaultChecked="checked"
         onChange={handleClickRadioButton2}
         />
         <label> 전체 </label>
@@ -124,7 +141,7 @@ function SearchPage() {
         />
         <label> 외부사이트 </label>
 
-        <br/><br/>
+        <br/>
       </div>
     </SearchBlock>
 }
