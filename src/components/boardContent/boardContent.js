@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import StadiumImage from "../../assets/img/logo.png";
+import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import styled from 'styled-components';
+import Paginate from 'react-paginate';
 
 const BorderBlock = styled.div`
 width: 80%;
@@ -55,6 +56,7 @@ justify-content: center;
 text-align: center;
 cursor: pointer;
 white-space: nowrap;
+font-size: 12px;
 
 &:hover {
   background-color: #ddd;
@@ -131,20 +133,127 @@ const dummyData = [
     name: "Stadium 7",
     address: "Address 7",
     image: {StadiumImage}
-  }
+  },
+  {
+    name: "체육 시설 8",
+    address: "주소 8",
+    image: {StadiumImage}
+  },{
+    name: "Stadium 9",
+    address: "Address 9",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 10",
+    address: "주소 10",
+    image: {StadiumImage}
+  },
+  {
+    name: "Stadium 11",
+    address: "Address 11",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 12",
+    address: "주소 12",
+    image: {StadiumImage}
+  },
+  {
+    name: "Stadium 13",
+    address: "Address 13",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 14",
+    address: "주소 14",
+    image: {StadiumImage}
+  },{
+    name: "Stadium 15",
+    address: "Address 15",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 16",
+    address: "주소 16",
+    image: {StadiumImage}
+  },{
+    name: "Stadium 17",
+    address: "Address 17",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 18",
+    address: "주소 18",
+    image: {StadiumImage}
+  },{
+    name: "Stadium 19",
+    address: "Address 19",
+    image: {StadiumImage}
+  },
+  {
+    name: "체육 시설 20",
+    address: "주소 20",
+    image: {StadiumImage}
+  },
 ];
 
+const per_page = 7;
+
+const Pagination = styled(Paginate)`
+display: flex;
+justify-content: center;
+padding: 20px;
+cursor: pointer;
+
+ul {
+  padding: 0;
+  margin 0;
+  display: flex;
+  justify-content: center;
+}
+
+li {
+  margin: 0 5px;
+  list-style: none;
+}
+`
+
 function StadiumPage() {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  function handlePageClick({selected: selectedPage}) {
+    setCurrentPage(selectedPage);
+  }
+
+  const offset = currentPage * per_page;
+
+  const currentPageData = dummyData
+    .slice(offset, offset + per_page)
+    .map((data, index) => (
+      <Stadium
+      key={index}
+      name={data.name}
+      address={data.address}
+      image={data.image}
+      />
+    ));
+  
+  const pageCount = Math.ceil(dummyData.length / per_page);
+
   return (
     <div>
-      {dummyData.map((data, index) => (
-        <Stadium
-          key={index}
-          name={data.name}
-          address={data.address}
-          image={data.image}
-        />
-      ))}
+      {currentPageData}
+      <Pagination
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link--disabled"}
+        activeClassName={"pagination__link--active"}
+      />
     </div>
   );
 }
