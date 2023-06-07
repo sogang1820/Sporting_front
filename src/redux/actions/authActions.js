@@ -3,10 +3,10 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 
 // 액션 생성자 함수
-export const loginSuccess = (user) => {
+export const loginSuccess = ({ accessToken, username }) => {
     return {
         type: LOGIN_SUCCESS,
-        payload: user,
+        payload: { accessToken, username },
     };
 };
 

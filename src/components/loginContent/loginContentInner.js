@@ -8,8 +8,11 @@ const LoginContentInner = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const [accessToken, setAccessToken] = useState("");
     const dispatch = useDispatch();
+
+    const handleClickSignup = () => {
+        navigate("/signup");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,14 +26,17 @@ const LoginContentInner = () => {
                 },
                 body: JSON.stringify({ user_id: username, password: password }),
             });
-            console.log(JSON.stringify({ username, password }));
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
-                setAccessToken(data.access_token);
-                dispatch(loginSuccess(data.user));
-                console.log({"user data":data.user});
+
+                dispatch(
+                    loginSuccess({
+                        accessToken: data.access_token,
+                        username: username, // 사용자 이름은 로그인 폼에서 입력한 username 값을 사용
+                    })
+                );
+
                 navigate("/");
             } else {
                 console.error("로그인 실패");
@@ -56,7 +62,7 @@ const LoginContentInner = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button type="submit">로그인</Button>
-                <ToSignUp>회원가입</ToSignUp>
+                <ToSignUp onClick={handleClickSignup}>회원가입</ToSignUp>
             </LoginForm>
         </Container>
     );
@@ -107,6 +113,7 @@ const Button = styled.button`
     font-weight: 700;
     font-size: 1rem;
 `;
+
 const ToSignUp = styled.div`
     cursor: pointer;
     margin-top: 0.5rem;

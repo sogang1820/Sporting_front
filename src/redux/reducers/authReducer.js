@@ -3,7 +3,10 @@ import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/authActions";
 // 초기 상태
 const initialState = {
     isLoggedIn: false,
-    user: null,
+    user: {
+        accessToken: "",
+        username: "",
+    },
 };
 
 // 리듀서 함수
@@ -13,7 +16,10 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload,
+                user: {
+                    accessToken: action.payload.accessToken,
+                    username: action.payload.username,
+                },
             };
         case LOGOUT_SUCCESS:
             return {

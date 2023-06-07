@@ -14,9 +14,12 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const checkLoginStatus = async () => {
+        const checkLoginStatus = async (user_id, password) => {
             try {
-                const response = await axios.get("/check-login"); // 로그인 상태 확인하는 API 호출
+                const response = await axios.post("http://localhost:8000/login", {
+                    user_id,
+                    password,
+                }); // 로그인 상태 확인하는 API 호출
                 const user = response.data.user;
                 if (user) {
                     dispatch(loginSuccess(user));
