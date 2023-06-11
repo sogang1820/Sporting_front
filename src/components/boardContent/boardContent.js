@@ -138,63 +138,7 @@ const dummyData = [
     name: "체육 시설 8",
     address: "주소 8",
     image: {StadiumImage}
-  },{
-    name: "Stadium 9",
-    address: "Address 9",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 10",
-    address: "주소 10",
-    image: {StadiumImage}
-  },
-  {
-    name: "Stadium 11",
-    address: "Address 11",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 12",
-    address: "주소 12",
-    image: {StadiumImage}
-  },
-  {
-    name: "Stadium 13",
-    address: "Address 13",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 14",
-    address: "주소 14",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 15",
-    address: "Address 15",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 16",
-    address: "주소 16",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 17",
-    address: "Address 17",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 18",
-    address: "주소 18",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 19",
-    address: "Address 19",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 20",
-    address: "주소 20",
-    image: {StadiumImage}
-  },
+  }
 ];
 
 const per_page = 7;
@@ -223,6 +167,7 @@ function StadiumPage() {
 
   function handlePageClick({selected: selectedPage}) {
     setCurrentPage(selectedPage);
+    window.scrollTo(0, 0);
   }
 
   const offset = currentPage * per_page;
