@@ -21,9 +21,9 @@ align-items: center;
 
 const Image = styled.img`
 width: 120px;
-height: 90px;
 float: left;
 margin-right: 20px;
+object-fit: cover;
 `
 
 const Content = styled.div`

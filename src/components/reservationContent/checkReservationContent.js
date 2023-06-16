@@ -31,7 +31,7 @@ const CenteredWrapper = styled.div`
 
 const Image = styled.img`
   width: 240px;
-  height: 180px;
+  object-fit: cover;
 `;
 
 const PayButton = styled.button`

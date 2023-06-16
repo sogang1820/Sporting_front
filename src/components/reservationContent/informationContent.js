@@ -20,8 +20,8 @@ const InfoBlock = styled.div`
 
 const Image = styled.img`
   width: 160px;
-  height: 120px;
   margin-right: 20px;
+  object-fit: cover;
 `;
 
 const Content = styled.div`
