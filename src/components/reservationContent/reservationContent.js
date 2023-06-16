@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -72,43 +73,50 @@ const CalendarWrapper = styled.div`
 `;
 
 function ReservationPage() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const { name, address, price, info, image } = location.state || {};
 
-  const dates = [];
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(selectedDate);
-    date.setDate(date.getDate() + i);
-    dates.push(date);
-  }
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(selectedDate);
+        date.setDate(date.getDate() + i);
+        dates.push(date);
+    }
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
 
-  return (
-    <PageWrapper>
-      <CalendarWrapper>
-        <span className="start-date-label">Start Date</span>
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          dateFormat="yyyy-MM-dd"
-        />
-      </CalendarWrapper>
-      {dates.map((date, index) => (
-        <DateBlock
-          key={index}
-          active={date.toISOString().split('T')[0] === selectedDate.toISOString().split('T')[0]}
-          onClick={() => setSelectedDate(date)}
-        >
-          <div>{date.toLocaleDateString()}</div>
-          {[...Array(8)].map((_, i) => (
-            <TimeBlock key={i}>Time {i + 1}</TimeBlock>
-          ))}
-        </DateBlock>
-      ))}
-    </PageWrapper>
-  );
+    return (
+        <PageWrapper>
+            <CalendarWrapper>
+                <span className="start-date-label">Start Date</span>
+                <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    dateFormat="yyyy-MM-dd"
+                />
+            </CalendarWrapper>
+            {dates.map((date, index) => (
+                <DateBlock
+                    key={index}
+                    active={date.toISOString().split('T')[0] === selectedDate.toISOString().split('T')[0]}
+                    onClick={() => setSelectedDate(date)}
+                >
+                    <div>{date.toLocaleDateString()}</div>
+                    {[...Array(8)].map((_, i) => (
+                        <TimeBlock
+                            key={i}
+                            onClick={() => navigate(`/checkReservation?date=${date.toISOString().split('T')[0]}&time=Time%20${i + 1}`, { state: { name, address, price, info, image }})}
+                            >
+                            Time {i + 1}
+                        </TimeBlock>))}
+                </DateBlock>
+            ))}
+        </PageWrapper>
+    );
 }
 
 export default ReservationPage;
