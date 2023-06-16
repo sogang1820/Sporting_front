@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import StadiumImage from "../../assets/img/logo.png";
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
@@ -65,8 +66,17 @@ font-size: 12px;
 }
 `
 
-function Stadium({ name, address, image }) {   
+const Title = styled.h2`
+cursor: pointer;
+`
+
+function Stadium({ name, address, image }) {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleStadiumClick = () => {
+    navigate(`/reservation?name=${encodeURIComponent(name)}`);
+  };
 
   const handleDateSelect = (date) => {
     console.log(date);
@@ -80,7 +90,7 @@ function Stadium({ name, address, image }) {
         <BorderBlock>
             <Image src={StadiumImage} alt="stadium image" />
             <Content>
-            <h2>{name}</h2>
+            <Title onClick={handleStadiumClick}>{name}</Title>
             <p>{address}</p>
             <DatePickerContainer>
               <CustomDatePicker

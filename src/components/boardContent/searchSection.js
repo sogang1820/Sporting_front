@@ -59,33 +59,33 @@ function SearchPage() {
 
   return <SearchBlock>
     <div>
-        종목
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input
+      종목
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input
         type="radio"
         value="baseball"
-        checked={sport ==="baseball"}
+        checked={sport === "baseball"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 야구 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 야구 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="basketball"
-        checked={sport ==="basketball"}
+        checked={sport === "basketball"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 농구 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 농구 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="futsal"
-        checked={sport ==="futsal"}
+        checked={sport === "futsal"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 풋살 </label>
+      />
+      <label> 풋살 </label>
 
-        <br/><br/>
+      <br /><br />
       <SelectWrapper>
         지역
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -111,37 +111,37 @@ function SearchPage() {
 
         </SelectBox>
       </SelectWrapper>
-      <br/>
+      <br />
 
       예약
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input
         type="radio"
         value="all"
-        checked={reservation ==="all"}
+        checked={reservation === "all"}
         onChange={handleClickRadioButton2}
-        />
-        <label> 전체 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 전체 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="spor+ing"
-        checked={reservation ==="spor+ing"}
+        checked={reservation === "spor+ing"}
         onChange={handleClickRadioButton2}
-        />
-        <label> Spor+ing </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> Spor+ing </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="other"
-        checked={reservation ==="other"}
+        checked={reservation === "other"}
         onChange={handleClickRadioButton2}
-        />
-        <label> 외부사이트 </label>
+      />
+      <label> 외부사이트 </label>
 
-        <br/>
-      </div>
-    </SearchBlock>
+      <br />
+    </div>
+  </SearchBlock>
 }
 
 export default SearchPage;

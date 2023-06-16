@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -41,44 +43,68 @@ const CalendarWrapper = styled.div`
   justify-content: center;
   margin-top: 30px;
   margin-bottom: 15px;
+
+  .start-date-label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  .react-datepicker {
+    border: none;
+    box-shadow: none;
+  }
+
+  .react-datepicker-wrapper {
+    display: inline-block;
+    width: auto;
+  }
+
+  .react-datepicker__input-container {
+    display: inline-block;
+    position: relative;
+  }
+
+  .react-datepicker__input-container input {
+    text-align: center;
+    width: 90px;
+    padding: 5px;
+  }
 `;
 
-const Calendar = styled.input`
-  padding: 7px;
-`;
+function ReservationPage() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-const getDatesForWeek = (selectedDate) => {
   const dates = [];
-  const startDate = new Date(selectedDate);
   for (let i = 0; i < 7; i++) {
-    const date = new Date(startDate);
+    const date = new Date(selectedDate);
     date.setDate(date.getDate() + i);
     dates.push(date);
   }
-  return dates;
-};
 
-function ReservationPage() {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const dates = getDatesForWeek(selectedDate);
-
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
   };
 
   return (
     <PageWrapper>
       <CalendarWrapper>
-        <Calendar
-          type="date"
-          value={selectedDate}
+        <span className="start-date-label">Start Date</span>
+        <DatePicker
+          selected={selectedDate}
           onChange={handleDateChange}
+          dateFormat="yyyy-MM-dd"
         />
       </CalendarWrapper>
       {dates.map((date, index) => (
-        <DateBlock key={index} active={date.toISOString().split('T')[0] === selectedDate} onClick={() => setSelectedDate(date.toISOString().split('T')[0])}>
+        <DateBlock
+          key={index}
+          active={date.toISOString().split('T')[0] === selectedDate.toISOString().split('T')[0]}
+          onClick={() => setSelectedDate(date)}
+        >
           <div>{date.toLocaleDateString()}</div>
-          {[...Array(8)].map((_, i) => <TimeBlock key={i}>Time {i + 1}</TimeBlock>)}
+          {[...Array(8)].map((_, i) => (
+            <TimeBlock key={i}>Time {i + 1}</TimeBlock>
+          ))}
         </DateBlock>
       ))}
     </PageWrapper>
