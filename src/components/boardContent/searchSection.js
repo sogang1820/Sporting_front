@@ -17,7 +17,7 @@ padding-left: 50px;
 margin-top: 32px;
 display: flex;
 align-items: center;
-font-size: 16px
+font-size: 15px
 `
 
 const SelectWrapper = styled.div`
@@ -34,15 +34,13 @@ const SelectBox = styled.select`
   border-radius: 3px;
   background-color: #ffffff;
   color: #000000;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
 function SearchPage() {
   const [sport, setSport] = useState('baseball');
   const [region, setRegion] = useState('');
   const [reservation, setReservation] = useState('all');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
 
   const handleClickRadioButton1 = (e) => {
     console.log(e.target.value);

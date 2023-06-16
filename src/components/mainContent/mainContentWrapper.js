@@ -1,30 +1,38 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Baseball from "../../assets/img/baseball.jpg";
 import Basketball from "../../assets/img/basketball.jpg";
 import Futsal from "../../assets/img/futsal.jpg";
 import styled from "styled-components";
 
 const circlesData = [
-    { image: Baseball, label: "야구" },
-    { image: Basketball, label: "농구" },
-    { image: Futsal, label: "풋살" },
+  { image: Baseball, label: "야구" },
+  { image: Basketball, label: "농구" },
+  { image: Futsal, label: "풋살" },
 ];
 
 const MainContentWrapper = () => {
-    return (
-        <Wrapper>
-            {circlesData.map((circle, index) => (
-                <Circle key={index}>
-                    <CircleImage className={circle.label.toLowerCase()}>
-                        <img src={circle.image} alt={circle.label} />
-                    </CircleImage>
-                    <Overlay>
-                        <Label>{circle.label}</Label>
-                    </Overlay>
-                </Circle>
-            ))}
-        </Wrapper>
-    );
+  const navigate = useNavigate();
+
+  const handleCircleClick = (label) => {
+    navigate("/board");
+    // You can replace "/board" with the desired path to navigate to
+  };
+
+  return (
+    <Wrapper>
+      {circlesData.map((circle, index) => (
+        <Circle key={index} onClick={() => handleCircleClick(circle.label)}>
+          <CircleImage className={circle.label.toLowerCase()}>
+            <img src={circle.image} alt={circle.label} />
+          </CircleImage>
+          <Overlay>
+            <Label>{circle.label}</Label>
+          </Overlay>
+        </Circle>
+      ))}
+    </Wrapper>
+  );
 };
 
 export default MainContentWrapper;

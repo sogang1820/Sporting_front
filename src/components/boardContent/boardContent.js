@@ -49,6 +49,8 @@ display: flex;
 const TimeBlock = styled.div`
 padding: 5px;
 margin: 5px;
+margin-left: 10px;
+margin-right: 10px;
 border: 1px solid #000000;
 display: flex;
 align-items: center;
