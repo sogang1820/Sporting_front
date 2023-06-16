@@ -6,6 +6,7 @@ import Board from "./pages/boardPage";
 import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
 import CheckReservation from "./pages/checkReservationPage";
+import Confirmation from "./pages/confirmationPage";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./redux/actions/authActions";
 import axios from "axios";
@@ -67,6 +68,7 @@ const App = () => {
                     <Route path="/board" element={<Board />} />
                     <Route path="/reservation" element={<Reservation />} />
                     <Route path="/checkReservation" element={<CheckReservation />} />
+                    <Route path="/confirmation" element={<Confirmation />} />
                     <Route
                         path="/mypage"
                         element={

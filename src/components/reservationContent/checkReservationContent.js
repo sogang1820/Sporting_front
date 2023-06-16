@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import StadiumImage from "../../assets/img/logo.png";
 import styled from 'styled-components';
 
 const InfoBlock = styled.div`
@@ -75,7 +74,6 @@ function CheckPage() {
                 <p>{selectedTime}</p>
                 <p>{price}</p>
                 <PayButton onClick={handlePayment}>결제하기</PayButton>
-
             </InfoBlock>
         </CenteredWrapper>
     );
