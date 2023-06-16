@@ -41,6 +41,7 @@ const CustomDatePicker = styled(DatePicker)`
 width: 90px;
 height: 20px;
 text-align: center;
+cursor: pointer;
 `
 
 const TimeBlockContainer = styled.div`
@@ -73,6 +74,7 @@ cursor: pointer;
 function Stadium({ name, address, image, price, info }) {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState('');
 
   const handleStadiumClick = () => {
     navigate(`/reservation?name=${encodeURIComponent(name)}`, {
@@ -85,31 +87,38 @@ function Stadium({ name, address, image, price, info }) {
     setSelectedDate(date);
   }
 
+  const handleTimeSelect = (time) => {
+    setSelectedTime(time);
+    navigate(`/checkreservation?name=${encodeURIComponent(name)}&date=${selectedDate.toISOString().split('T')[0]}&time=Time%20${time}`, {
+      state: { name, address, image, price, info },
+    });
+  }
+
   const blocks = new Array(8).fill(null);
 
   return (
     <div>
-        <BorderBlock>
-            <Image src={StadiumImage} alt="stadium image" />
-            <Content>
-            <Title onClick={handleStadiumClick}>{name}</Title>
-            <p>{address}</p>
-            <DatePickerContainer>
-              <CustomDatePicker
-                selected={selectedDate}
-                onChange={handleDateSelect}
-                dateFormat="yyyy-MM-dd"
-              />
-              <TimeBlockContainer>
+      <BorderBlock>
+        <Image src={StadiumImage} alt="stadium image" />
+        <Content>
+          <Title onClick={handleStadiumClick}>{name}</Title>
+          <p>{address}</p>
+          <DatePickerContainer>
+            <CustomDatePicker
+              selected={selectedDate}
+              onChange={handleDateSelect}
+              dateFormat="yyyy-MM-dd"
+            />
+            <TimeBlockContainer>
               {blocks.map((_, index) => (
-                <TimeBlock key={index} onClick={()=>console.log(`Time ${index+1} selected.`)}>
+                <TimeBlock key={index} onClick={() => handleTimeSelect(index + 1)}>
                   Time {index + 1}
-                 </TimeBlock>
+                </TimeBlock>
               ))}
-              </TimeBlockContainer>
-            </DatePickerContainer>
-          </Content>
-        </BorderBlock>
+            </TimeBlockContainer>
+          </DatePickerContainer>
+        </Content>
+      </BorderBlock>
     </div>
   );
 }
@@ -142,7 +151,7 @@ const dummyData = [
     price: "가격 4",
     info: "체육 시설 정보 4",
     image: StadiumImage
-  },{
+  }, {
     name: "Stadium 5",
     address: "Address 5",
     price: "Price 5",
@@ -155,7 +164,7 @@ const dummyData = [
     price: "가격 6",
     info: "체육 시설 정보 6",
     image: StadiumImage
-  },{
+  }, {
     name: "Stadium 7",
     address: "Address 7",
     price: "Price 7",
@@ -195,7 +204,7 @@ li {
 function StadiumPage() {
   const [currentPage, setCurrentPage] = useState(0);
 
-  function handlePageClick({selected: selectedPage}) {
+  function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
     window.scrollTo(0, 0);
   }
@@ -206,15 +215,15 @@ function StadiumPage() {
     .slice(offset, offset + per_page)
     .map((data, index) => (
       <Stadium
-      key={index}
-      name={data.name}
-      address={data.address}
-      image={data.image}
-      price={data.price}
-      info={data.info}
+        key={index}
+        name={data.name}
+        address={data.address}
+        image={data.image}
+        price={data.price}
+        info={data.info}
       />
     ));
-  
+
   const pageCount = Math.ceil(dummyData.length / per_page);
 
   return (
