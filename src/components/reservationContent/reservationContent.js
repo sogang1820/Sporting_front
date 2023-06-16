@@ -66,6 +66,7 @@ const CalendarWrapper = styled.div`
   }
 
   .react-datepicker__input-container input {
+    font-family: 'GmarketMedium', sans-serif;
     text-align: center;
     width: 90px;
     padding: 5px;

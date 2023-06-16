@@ -8,6 +8,7 @@ import Paginate from 'react-paginate';
 
 const BorderBlock = styled.div`
 width: 80%;
+height: auto;
 position: relative;
 background: #FFFFFF;
 border-top: 1px solid #000000;
@@ -42,6 +43,7 @@ width: 90px;
 height: 20px;
 text-align: center;
 cursor: pointer;
+font-family: 'GmarketLight', sans-serif;
 `
 
 const TimeBlockContainer = styled.div`
@@ -126,6 +128,7 @@ function Stadium({ name, address, image, price, info }) {
 const dummyData = [
   {
     name: "Stadium 1",
+    sport: "baseball",
     address: "Address 1",
     price: "Price 1",
     info: "Stadium Information 1",
@@ -133,6 +136,7 @@ const dummyData = [
   },
   {
     name: "체육 시설 2",
+    sport: "basketball",
     address: "주소 2",
     price: "가격 2",
     info: "체육 시설 정보 2",
@@ -140,6 +144,7 @@ const dummyData = [
   },
   {
     name: "Stadium 3",
+    sport: "futsal",
     address: "Address 3",
     price: "Price 3",
     info: "Stadium Information 3",
@@ -147,12 +152,14 @@ const dummyData = [
   },
   {
     name: "체육 시설 4",
+    sport: "baseball",
     address: "주소 4",
     price: "가격 4",
     info: "체육 시설 정보 4",
     image: StadiumImage
   }, {
     name: "Stadium 5",
+    sport: "basketball",
     address: "Address 5",
     price: "Price 5",
     info: "Stadium Information 5",
@@ -160,12 +167,14 @@ const dummyData = [
   },
   {
     name: "체육 시설 6",
+    sport: "futsal",
     address: "주소 6",
     price: "가격 6",
     info: "체육 시설 정보 6",
     image: StadiumImage
   }, {
     name: "Stadium 7",
+    sport: "baseball",
     address: "Address 7",
     price: "Price 7",
     info: "Stadium Information 7",
@@ -173,6 +182,7 @@ const dummyData = [
   },
   {
     name: "체육 시설 8",
+    sport: "basketball",
     address: "주소 8",
     price: "가격 8",
     info: "체육 시설 정보 8",

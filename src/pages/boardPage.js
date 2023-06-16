@@ -20,7 +20,6 @@ const BoardPage = () => {
           <SearchSection/>
           <br/>
           <div style={{display:'flex', justifyContent:'center'}}>
-          <SearchButton> 검색 </SearchButton>
           </div>
           <BoardSection/>
       </div>
