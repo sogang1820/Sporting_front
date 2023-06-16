@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import StadiumImage from "../../assets/img/logo.png";
 import styled from 'styled-components';
 
@@ -51,25 +52,83 @@ const dummyData = [
   {
     name: "Stadium 1",
     address: "Address 1",
-    price: "Price",
-    info: "Stadium Information",
+    price: "Price 1",
+    info: "Stadium Information 1",
     image: StadiumImage,
   },
+  {
+    name: "체육 시설 2",
+    address: "주소 2",
+    price: "가격 2",
+    info: "체육 시설 정보 2",
+    image: StadiumImage
+  },
+  {
+    name: "Stadium 3",
+    address: "Address 3",
+    price: "Price 3",
+    info: "Stadium Information 3",
+    image: StadiumImage
+  },
+  {
+    name: "체육 시설 4",
+    address: "주소 4",
+    price: "가격 4",
+    info: "체육 시설 정보 4",
+    image: StadiumImage
+  },{
+    name: "Stadium 5",
+    address: "Address 5",
+    price: "Price 5",
+    info: "Stadium Information 5",
+    image: StadiumImage
+  },
+  {
+    name: "체육 시설 6",
+    address: "주소 6",
+    price: "가격 6",
+    info: "체육 시설 정보 6",
+    image: StadiumImage
+  },{
+    name: "Stadium 7",
+    address: "Address 7",
+    price: "Price 7",
+    info: "Stadium Information 7",
+    image: StadiumImage
+  },
+  {
+    name: "체육 시설 8",
+    address: "주소 8",
+    price: "가격 8",
+    info: "체육 시설 정보 8",
+    image: StadiumImage
+  }
 ];
 
 function StadiumDetail() {
+  const location = useLocation();
+  const [stadiumInfo, setStadiumInfo] = useState(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const selectedStadium = searchParams.get('name');
+    const stadium = dummyData.find((data) => data.name === selectedStadium);
+    setStadiumInfo(stadium);
+  }, [location.search]);
+
+  if (!stadiumInfo) {
+    return null;
+  }
+
   return (
     <div>
-      {dummyData.map((data, index) => (
-        <InformationPage
-          key={index}
-          name={data.name}
-          address={data.address}
-          price={data.price}
-          info={data.info}
-          image={data.image}
-        />
-      ))}
+      <InformationPage
+        name={stadiumInfo.name}
+        address={stadiumInfo.address}
+        price={stadiumInfo.price}
+        info={stadiumInfo.info}
+        image={stadiumInfo.image}
+      />
     </div>
   );
 }

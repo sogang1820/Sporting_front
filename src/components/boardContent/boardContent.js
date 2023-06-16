@@ -70,12 +70,14 @@ const Title = styled.h2`
 cursor: pointer;
 `
 
-function Stadium({ name, address, image }) {
+function Stadium({ name, address, image, price, info }) {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleStadiumClick = () => {
-    navigate(`/reservation?name=${encodeURIComponent(name)}`);
+    navigate(`/reservation?name=${encodeURIComponent(name)}`, {
+      state: { name, address, image, price, info },
+    });
   };
 
   const handleDateSelect = (date) => {
@@ -116,40 +118,56 @@ const dummyData = [
   {
     name: "Stadium 1",
     address: "Address 1",
-    image: {StadiumImage}
+    price: "Price 1",
+    info: "Stadium Information 1",
+    image: StadiumImage
   },
   {
     name: "체육 시설 2",
     address: "주소 2",
-    image: {StadiumImage}
+    price: "가격 2",
+    info: "체육 시설 정보 2",
+    image: StadiumImage
   },
   {
     name: "Stadium 3",
     address: "Address 3",
-    image: {StadiumImage}
+    price: "Price 3",
+    info: "Stadium Information 3",
+    image: StadiumImage
   },
   {
     name: "체육 시설 4",
     address: "주소 4",
-    image: {StadiumImage}
+    price: "가격 4",
+    info: "체육 시설 정보 4",
+    image: StadiumImage
   },{
     name: "Stadium 5",
     address: "Address 5",
-    image: {StadiumImage}
+    price: "Price 5",
+    info: "Stadium Information 5",
+    image: StadiumImage
   },
   {
     name: "체육 시설 6",
     address: "주소 6",
-    image: {StadiumImage}
+    price: "가격 6",
+    info: "체육 시설 정보 6",
+    image: StadiumImage
   },{
     name: "Stadium 7",
     address: "Address 7",
-    image: {StadiumImage}
+    price: "Price 7",
+    info: "Stadium Information 7",
+    image: StadiumImage
   },
   {
     name: "체육 시설 8",
     address: "주소 8",
-    image: {StadiumImage}
+    price: "가격 8",
+    info: "체육 시설 정보 8",
+    image: StadiumImage
   }
 ];
 
@@ -192,6 +210,8 @@ function StadiumPage() {
       name={data.name}
       address={data.address}
       image={data.image}
+      price={data.price}
+      info={data.info}
       />
     ));
   
