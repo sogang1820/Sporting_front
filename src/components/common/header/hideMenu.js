@@ -26,6 +26,16 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
+    const navigateToBaseBallPage = () => {
+        navigate("/board");
+    };
+    const navigateToBasketBallPage = () => {
+        navigate("/board");
+    };
+
+    const navigateToFutsalPage = () => {
+        navigate("/board");
+    };
 
     return (
         <>
@@ -36,9 +46,11 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
                 <MenuContent>
                     <MenuText>Menu</MenuText>
                     <Line />
-                    <BaseBall>야구</BaseBall>
-                    <BasketBall>농구</BasketBall>
-                    <Futsal>풋살</Futsal>
+                    <BaseBall onClick={navigateToBaseBallPage}>야구</BaseBall>
+                    <BasketBall onClick={navigateToBasketBallPage}>
+                        농구
+                    </BasketBall>
+                    <Futsal onClick={navigateToFutsalPage}>풋살</Futsal>
                     <MenuBottom>
                         {isLoggedIn ? (
                             <>

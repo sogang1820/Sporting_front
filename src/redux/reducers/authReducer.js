@@ -1,9 +1,21 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../actions/authActions";
+import {
+    LOGIN_SUCCESS,
+    LOGOUT_SUCCESS,
+    FETCH_USER_INFO_REQUEST,
+    FETCH_USER_INFO_SUCCESS,
+    FETCH_USER_INFO_FAILURE,
+} from "../actions/authActions";
 
 // 초기 상태
 const initialState = {
     isLoggedIn: false,
-    user: null,
+    user: {
+        accessToken: "",
+        user_id: "",
+        userInfo: null,
+    },
+    isFetchingUserInfo: false,
+    userInfoError: null,
 };
 
 // 리듀서 함수
@@ -13,13 +25,43 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                user: action.payload,
+                user: {
+                    accessToken: action.payload.accessToken,
+                    user_id: action.payload.user_id,
+                    userInfo: action.payload.userInfo,
+                },
             };
         case LOGOUT_SUCCESS:
             return {
                 ...state,
                 isLoggedIn: false,
-                user: null,
+                user: {
+                    accessToken: "",
+                    username: "",
+                    userInfo: null, // 로그아웃 시 개인정보 초기화
+                },
+            };
+        case FETCH_USER_INFO_REQUEST:
+            return {
+                ...state,
+                isFetchingUserInfo: true,
+                userInfoError: null,
+            };
+        case FETCH_USER_INFO_SUCCESS:
+            console.log("userInfo-reducer: ", action.payload);
+            return {
+                ...state,
+                isFetchingUserInfo: false,
+                user: {
+                    ...state.user,
+                    userInfo: action.payload, // 받아온 개인정보로 상태 업데이트
+                },
+            };
+        case FETCH_USER_INFO_FAILURE:
+            return {
+                ...state,
+                isFetchingUserInfo: false,
+                userInfoError: action.payload,
             };
         default:
             return state;

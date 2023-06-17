@@ -1,75 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const MyPagePrivateInfo = ({ onLogin }) => {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
-    const [username, setUsername] = useState("");
+    const username = user.userInfo ? user.userInfo.username : null;
+    // const username = user.userInfo ? user.userInfo.username : null;
+    const phone_number = user.userInfo ? user.userInfo.phone_number : null;
+    console.log(username);
+    const navigateToMyPage = () => {
+        navigate("/mypage");
+    };
 
-    useEffect(() => {
-        // 사용자 정보 요청
-        const fetchUserProfile = async () => {
-            try {
-                console.log("hello fetchUserProfile");
-                console.log({ user_id: user.user_id });
-                const response = await fetch(
-                    `http://localhost:8000/users/${user.user_id}/profile`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                        },
-                    }
-                );
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setUsername(data.username); // 사용자 이름 설정
-                } else {
-                    console.error("사용자 정보 요청 실패");
-                }
-            } catch (error) {
-                console.error("사용자 정보 요청 에러:", error);
-            }
-        };
-
-        if (user) {
-            fetchUserProfile();
-        }
-    }, [user]);
     return (
-        <>
-            <PrivateInfoWrapper>
-                <MyPageText>마이 페이지</MyPageText>
-                <InfoWrapper>
-                    <FieldWrapper>
-                        <PrivateInfoField>이름</PrivateInfoField>
-                        <PrivateInfoData>최수빈{username}</PrivateInfoData>
-                    </FieldWrapper>
-                    <FieldWrapper>
-                        <PrivateInfoField>연락처</PrivateInfoField>
-                        <PrivateInfoData>010xxxxxxxx{username}</PrivateInfoData>
-                    </FieldWrapper>
-                    <FieldWrapper>
-                        <PrivateInfoField>선호종목</PrivateInfoField>
-                        <PrivateInfoData>야구{username}</PrivateInfoData>
-                    </FieldWrapper>
-                    <FieldWrapper>
-                        <PrivateInfoField>보유 포인트</PrivateInfoField>
-                        <PrivateInfoData>
-                            <div>10000pt</div>
-                            <FixInfoWrapper>
-                                <PointLoad>포인트 충전</PointLoad>
-                                <PointWithDraw>포인트 인출</PointWithDraw>
-                            </FixInfoWrapper>
-                        </PrivateInfoData>
-                    </FieldWrapper>
-                    <FixInfoWrapper>
-                        <FixPrivateInfo>개인정보 변경</FixPrivateInfo>
-                        <DeleteAccount>계정 삭제</DeleteAccount>
-                    </FixInfoWrapper>
-                </InfoWrapper>
-            </PrivateInfoWrapper>
-        </>
+        <PrivateInfoWrapper>
+            <MyPageText>마이 페이지</MyPageText>
+            <InfoWrapper>
+                <FieldWrapper>
+                    <PrivateInfoField>이름</PrivateInfoField>
+                    <PrivateInfoData>{username}</PrivateInfoData>
+                </FieldWrapper>
+                <FieldWrapper>
+                    <PrivateInfoField>연락처</PrivateInfoField>
+                    <PrivateInfoData>{phone_number}</PrivateInfoData>
+                </FieldWrapper>
+                <FieldWrapper>
+                    <PrivateInfoField>선호종목</PrivateInfoField>
+                    <PrivateInfoData>야구</PrivateInfoData>
+                </FieldWrapper>
+                <FieldWrapper>
+                    <PrivateInfoField>보유 포인트</PrivateInfoField>
+                    <PrivateInfoData>
+                        <div>pt</div>
+                        <FixInfoWrapper>
+                            <PointLoad>포인트 충전</PointLoad>
+                            <PointWithDraw>포인트 인출</PointWithDraw>
+                        </FixInfoWrapper>
+                    </PrivateInfoData>
+                </FieldWrapper>
+                <FixInfoWrapper>
+                    <FixPrivateInfo onClick={navigateToMyPage}>
+                        개인정보 변경
+                    </FixPrivateInfo>
+                    <DeleteAccount>계정 삭제</DeleteAccount>
+                </FixInfoWrapper>
+            </InfoWrapper>
+        </PrivateInfoWrapper>
     );
 };
 export default MyPagePrivateInfo;

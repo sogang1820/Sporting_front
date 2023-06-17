@@ -1,45 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "styled-components";
-
+import { useNavigate } from "react-router-dom";
+// import { loginSuccess, fetchUserInfo } from "../../../redux/actions/authActions";
 const HeaderUser = () => {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
-    const [username, setUsername] = useState("");
+    const username = user.userInfo ? user.userInfo.username : null;
+    console.log("in headerUser: ", user);
+    const handleClick = () => {
+        navigate("/mypage");
+    };
 
-    useEffect(() => {
-        // 사용자 정보 요청
-        const fetchUserProfile = async () => {
-            try {
-                console.log("hello fetchUserProfile");
-                console.log({ user_id: user.user_id });
-                const response = await fetch(
-                    `http://localhost:8000/users/${user.user_id}/profile`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                        },
-                    }
-                );
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setUsername(data.username); // 사용자 이름 설정
-                } else {
-                    console.error("사용자 정보 요청 실패");
-                }
-            } catch (error) {
-                console.error("사용자 정보 요청 에러:", error);
-            }
-        };
-
-        if (user) {
-            fetchUserProfile();
-        }
-    }, [user]);
     return (
         <>
             <ToMyPage>
-                <div>My Page {username}</div>
+                <div onClick={handleClick}>{username}</div>
             </ToMyPage>
         </>
     );
@@ -52,4 +28,5 @@ const ToMyPage = styled.div`
     font-size: 2rem;
     color: brown;
     margin: auto;
+    cursor: pointer;
 `;
