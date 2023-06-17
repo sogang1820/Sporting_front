@@ -130,7 +130,7 @@ const dummyData = [
   {
     stadium_name: "Stadium 1",
     sports_category: "baseball",
-    stadium_location: "Address 1",
+    stadium_location: "경기도 부천시",
     stadium_price: "Price 1",
     stadium_info: "Stadium Information 1",
     stadium_image: StadiumImage
@@ -220,14 +220,31 @@ function StadiumPage() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sports_category = params.get('sports_category');
+    const stadium_name = params.get('stadium_name');
+    const stadium_location = params.get('stadium_location');
+
+    let filtered = dummyData;
 
     if (sports_category) {
-      const filtered = dummyData.filter(item => item.sports_category === sports_category);
-      setFilteredData(filtered);
-    } else {
-      setFilteredData(dummyData);
+      filtered = filtered.filter(item => item.sports_category === sports_category);
     }
+
+    if (stadium_name) {
+      filtered = filtered.filter(item =>
+        item.stadium_name.toLowerCase().includes(stadium_name.toLowerCase())
+      );
+    }
+
+    if (stadium_location && stadium_location !== "NULL") {
+      const filteredLocation = filtered.filter(item =>
+        item.stadium_location.slice(0, 2) === stadium_location.slice(0, 2)
+      );
+      filtered = filteredLocation;
+    }
+  
+    setFilteredData(filtered);
   }, [location]);
+
 
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);

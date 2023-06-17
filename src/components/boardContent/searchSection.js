@@ -39,14 +39,43 @@ const SelectBox = styled.select`
   font-size: 14px;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  margin-top: 16px;
+`;
+
+const Input = styled.input`
+  padding: 4px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  background-color: #F8F6F4;
+  color: #000000;
+  font-size: 14px;
+`;
+
+const SearchButton = styled.button`
+  padding: 5px 10px;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-size: 14px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  font-family: 'GmarketLight', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `;
+
 function SearchPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [sports_category, setSport] = useState('');
   const [stadium_location, setRegion] = useState('');
   const [reservation, setReservation] = useState('all');
-
+  const [stadium_name, setStadiumName] = useState('');
 
   useEffect(() => {
     const parsed = queryString.parse(location.search);
@@ -70,6 +99,21 @@ function SearchPage() {
     console.log(e.target.value);
     setRegion(e.target.value);
   }
+
+  const handleStadiumNameChange = (e) => {
+    setStadiumName(e.target.value);
+  };
+
+  const handleSearch = () => {
+    const query = queryString.stringify({
+      sports_category,
+      stadium_location,
+      stadium_name,
+      reservation,
+    });
+
+    navigate(`/board?${query}`);
+  };
 
   return <SearchBlock>
     <div>
@@ -154,6 +198,18 @@ function SearchPage() {
       <label> 외부사이트 </label>
 
       <br />
+
+      <InputWrapper>
+        검색
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Input
+          type="text"
+          value={stadium_name}
+          onChange={handleStadiumNameChange}
+        />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <SearchButton onClick={handleSearch}>검색</SearchButton>
+      </InputWrapper>
     </div>
   </SearchBlock>
 }
