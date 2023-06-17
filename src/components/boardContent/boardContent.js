@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import StadiumImage from "../../assets/img/logo.png";
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
@@ -7,15 +7,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Paginate from 'react-paginate';
 
 const BorderBlock = styled.div`
-width: 80%;
-height: auto;
+width: 65%;
+height: 150px;
 position: relative;
-background: #FFFFFF;
+background: #F8F6F4;
 border-top: 1px solid #000000;
 border-bottom: 1px solid #000000;
 margin: 0 auto;
-padding-left: 50px;
-margin-top: 32px;
+padding-left: 30px;
+margin-top: 30px;
 display: flex;
 align-items: center;
 `
@@ -51,6 +51,7 @@ display: flex;
 `
 
 const TimeBlock = styled.div`
+background: #FFFFFF;
 padding: 5px;
 margin: 5px;
 margin-left: 10px;
@@ -127,66 +128,66 @@ function Stadium({ name, address, image, price, info }) {
 
 const dummyData = [
   {
-    name: "Stadium 1",
-    sport: "baseball",
-    address: "Address 1",
-    price: "Price 1",
-    info: "Stadium Information 1",
-    image: StadiumImage
+    stadium_name: "Stadium 1",
+    sports_category: "baseball",
+    stadium_location: "Address 1",
+    stadium_price: "Price 1",
+    stadium_info: "Stadium Information 1",
+    stadium_image: StadiumImage
   },
   {
-    name: "체육 시설 2",
-    sport: "basketball",
-    address: "주소 2",
-    price: "가격 2",
-    info: "체육 시설 정보 2",
-    image: StadiumImage
+    stadium_name: "체육 시설 2",
+    sports_category: "basketball",
+    stadium_location: "주소 2",
+    stadium_price: "가격 2",
+    stadium_info: "체육 시설 정보 2",
+    stadium_image: StadiumImage
   },
   {
-    name: "Stadium 3",
-    sport: "futsal",
-    address: "Address 3",
-    price: "Price 3",
-    info: "Stadium Information 3",
-    image: StadiumImage
+    stadium_name: "Stadium 3",
+    sports_category: "futsal",
+    stadium_location: "Address 3",
+    stadium_price: "Price 3",
+    stadium_info: "Stadium Information 3",
+    stadium_image: StadiumImage
   },
   {
-    name: "체육 시설 4",
-    sport: "baseball",
-    address: "주소 4",
-    price: "가격 4",
-    info: "체육 시설 정보 4",
-    image: StadiumImage
+    stadium_name: "체육 시설 4",
+    sports_category: "baseball",
+    stadium_location: "주소 4",
+    stadium_price: "가격 4",
+    stadium_info: "체육 시설 정보 4",
+    stadium_image: StadiumImage
   }, {
-    name: "Stadium 5",
-    sport: "basketball",
-    address: "Address 5",
-    price: "Price 5",
-    info: "Stadium Information 5",
-    image: StadiumImage
+    stadium_name: "Stadium 5",
+    sports_category: "basketball",
+    stadium_location: "Address 5",
+    stadium_price: "Price 5",
+    stadium_info: "Stadium Information 5",
+    stadium_image: StadiumImage
   },
   {
-    name: "체육 시설 6",
-    sport: "futsal",
-    address: "주소 6",
-    price: "가격 6",
-    info: "체육 시설 정보 6",
-    image: StadiumImage
+    stadium_name: "체육 시설 6",
+    sports_category: "futsal",
+    stadium_location: "주소 6",
+    stadium_price: "가격 6",
+    stadium_info: "체육 시설 정보 6",
+    stadium_image: StadiumImage
   }, {
-    name: "Stadium 7",
-    sport: "baseball",
-    address: "Address 7",
-    price: "Price 7",
-    info: "Stadium Information 7",
-    image: StadiumImage
+    stadium_name: "Stadium 7",
+    sports_category: "baseball",
+    stadium_location: "Address 7",
+    stadium_price: "Price 7",
+    stadium_info: "Stadium Information 7",
+    stadium_image: StadiumImage
   },
   {
-    name: "체육 시설 8",
-    sport: "basketball",
-    address: "주소 8",
-    price: "가격 8",
-    info: "체육 시설 정보 8",
-    image: StadiumImage
+    stadium_name: "체육 시설 8",
+    sports_category: "basketball",
+    stadium_location: "주소 8",
+    stadium_price: "가격 8",
+    stadium_info: "체육 시설 정보 8",
+    stadium_image: StadiumImage
   }
 ];
 
@@ -212,7 +213,21 @@ li {
 `
 
 function StadiumPage() {
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const sports_category = params.get('sports_category');
+
+    if (sports_category) {
+      const filtered = dummyData.filter(item => item.sports_category === sports_category);
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(dummyData);
+    }
+  }, [location]);
 
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
@@ -221,20 +236,20 @@ function StadiumPage() {
 
   const offset = currentPage * per_page;
 
-  const currentPageData = dummyData
+  const currentPageData = filteredData
     .slice(offset, offset + per_page)
     .map((data, index) => (
       <Stadium
         key={index}
-        name={data.name}
-        address={data.address}
-        image={data.image}
-        price={data.price}
-        info={data.info}
+        name={data.stadium_name}
+        address={data.stadium_location}
+        image={data.stadium_image}
+        price={data.stadium_price}
+        info={data.stadium_info}
       />
     ));
 
-  const pageCount = Math.ceil(dummyData.length / per_page);
+  const pageCount = Math.ceil(filteredData.length / per_page);
 
   return (
     <div>

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 const SearchBlock = styled.div`
 width: 90%;
@@ -38,13 +40,25 @@ const SelectBox = styled.select`
 `;
 
 function SearchPage() {
-  const [sport, setSport] = useState('baseball');
-  const [region, setRegion] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const [sports_category, setSport] = useState('');
+  const [stadium_location, setRegion] = useState('');
   const [reservation, setReservation] = useState('all');
+
+
+  useEffect(() => {
+    const parsed = queryString.parse(location.search);
+    if (parsed.sports_category) {
+      setSport(parsed.sports_category);
+    }
+  }, [location]);
 
   const handleClickRadioButton1 = (e) => {
     console.log(e.target.value);
     setSport(e.target.value);
+    navigate(`/board?sports_category=${e.target.value}`);
   }
 
   const handleClickRadioButton2 = (e) => {
@@ -64,7 +78,7 @@ function SearchPage() {
       <input
         type="radio"
         value="baseball"
-        checked={sport === "baseball"}
+        checked={sports_category === "baseball"}
         onChange={handleClickRadioButton1}
       />
       <label> 야구 </label>
@@ -72,7 +86,7 @@ function SearchPage() {
       <input
         type="radio"
         value="basketball"
-        checked={sport === "basketball"}
+        checked={sports_category === "basketball"}
         onChange={handleClickRadioButton1}
       />
       <label> 농구 </label>
@@ -80,7 +94,7 @@ function SearchPage() {
       <input
         type="radio"
         value="futsal"
-        checked={sport === "futsal"}
+        checked={sports_category === "futsal"}
         onChange={handleClickRadioButton1}
       />
       <label> 풋살 </label>
@@ -89,7 +103,7 @@ function SearchPage() {
       <SelectWrapper>
         지역
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <SelectBox value={region} onChange={handleSelect}>
+        <SelectBox value={stadium_location} onChange={handleSelect}>
           <option value="NULL">지역</option>
           <option value="서울">서울</option>
           <option value="부산">부산</option>

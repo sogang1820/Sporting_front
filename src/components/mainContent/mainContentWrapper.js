@@ -6,23 +6,22 @@ import Futsal from "../../assets/img/futsal.jpg";
 import styled from "styled-components";
 
 const circlesData = [
-  { image: Baseball, label: "야구" },
-  { image: Basketball, label: "농구" },
-  { image: Futsal, label: "풋살" },
+  { image: Baseball, value: "baseball", label: "야구" },
+  { image: Basketball, value: "basketball", label: "농구" },
+  { image: Futsal, value: "futsal", label: "풋살" },
 ];
 
 const MainContentWrapper = () => {
   const navigate = useNavigate();
 
-  const handleCircleClick = (label) => {
-    navigate("/board");
-    // You can replace "/board" with the desired path to navigate to
+  const handleCircleClick = (value) => {
+    navigate(`/board?sports_category=${value}`);
   };
 
   return (
     <Wrapper>
       {circlesData.map((circle, index) => (
-        <Circle key={index} onClick={() => handleCircleClick(circle.label)}>
+        <Circle key={index} onClick={() => handleCircleClick(circle.value)}>
           <CircleImage className={circle.label.toLowerCase()}>
             <img src={circle.image} alt={circle.label} />
           </CircleImage>

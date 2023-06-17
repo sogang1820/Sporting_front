@@ -15,7 +15,8 @@ const InfoBlock = styled.div`
   margin-top: 32px;
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-family: 'GmarketMedium', sans-serif;
+  font-size: 18px;
 `;
 
 const Image = styled.img`
