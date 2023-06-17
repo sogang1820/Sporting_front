@@ -1,5 +1,9 @@
 # Ignore node_modules directory
 node_modules/
+<<<<<<< HEAD
 node_modules/.cache/default-development
+=======
+node_modules/.cache/
+>>>>>>> cc57fd6de0bd4ccc75852d1c987f62711c601583
 # Ignore .cache directory
 .cache/

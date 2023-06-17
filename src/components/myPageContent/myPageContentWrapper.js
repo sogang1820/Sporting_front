@@ -7,8 +7,8 @@ const MyPageContentWrapper = ({ onLogin }) => {
     return (
         <>
             <Wrapper>
-                <MyPagePrivateInfo/>
-                <MyPageReservation/>
+                <MyPagePrivateInfo />
+                <MyPageReservation />
             </Wrapper>
         </>
     );
