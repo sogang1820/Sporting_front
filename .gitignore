@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 # Ignore node_modules directory
 node_modules/
 node_modules/.cache/default-development
 # Ignore .cache directory
 .cache/
+=======
+# React .gitignore
+node_modules/
+>>>>>>> 42d6b68afc4c3b4920ce3baf0f3f1cb052324035
