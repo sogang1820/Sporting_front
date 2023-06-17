@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const SignUpInnerWrapper = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         user_id: "",
         password: "",
         username: "",
         phone_number: "",
         is_manager: false,
+        passwordConfirm: "", // passwordConfirm 속성 추가
     });
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -35,12 +38,15 @@ const SignUpInnerWrapper = () => {
                 console.log(responseData);
                 const userId = responseData.user_id;
                 console.log("사용자 ID:", userId);
+                navigate("/");
             })
             .catch((error) => {
                 console.log("회원가입 실패:", error.response.data);
                 setErrorMessage("회원가입 실패: " + error.response.data);
             });
     };
+
+    const handleSignUpClick = () => {};
 
     return (
         <SignUpWrapper>
@@ -120,7 +126,9 @@ const SignUpInnerWrapper = () => {
                     </SignupManager>
                 </SignupLabel>
                 <br />
-                <SignUpButton type="submit">회원가입</SignUpButton>
+                <SignUpButton type="submit">
+                    <div>회원가입</div>
+                </SignUpButton>
             </SignUpForm>
         </SignUpWrapper>
     );
@@ -160,14 +168,14 @@ const SignupLabel = styled.label`
 const SignupLabelCheck = styled.label`
     color: #000055;
     font-weight: 600;
-    & div{
+    & div {
         margin: 0;
     }
 `;
 const ErrorMessage = styled.div`
     color: red;
     font-size: 0.7rem;
-`
+`;
 const SignUpWrap = styled.input`
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -197,7 +205,6 @@ const SignUpInput = styled.input`
     font-size: 1.2rem;
     outline: none;
 `;
-
 
 const SignUpButton = styled.button`
     width: 21.6rem;

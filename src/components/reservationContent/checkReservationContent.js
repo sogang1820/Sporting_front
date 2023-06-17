@@ -15,7 +15,6 @@ const InfoBlock = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  font-family: 'GmarketMedium', sans-serif;
 
   p {
     margin: 10px 0;
@@ -53,7 +52,11 @@ function CheckPage() {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
-  const { name, address, image } = location.state || {};
+  const { name, address, price, image } = location.state || {};
+
+  const [userPoints, setUserPoints] = useState(1000);
+  const currentPoints = userPoints;
+  const requiredPoints = price - userPoints;
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -64,17 +67,31 @@ function CheckPage() {
   const handlePayment = () => {
     console.log('Pay button clicked.');
 
-    navigate('/reservationComplete', {
-      state: {
-        image,
-        name,
-        address,
-        selectedDate,
-        selectedTime
-      }
-    });
+    if (requiredPoints > 0) {
+      navigate('/payment', {
+        state: {
+          name,
+          address,
+          selectedDate,
+          selectedTime,
+          price,
+          currentPoints,
+          requiredPoints
+        }
+      });
+    } else {
+      navigate('/reservationComplete', {
+        state: {
+          image,
+          name,
+          address,
+          price,
+          selectedDate,
+          selectedTime
+        }
+      });
+    }
   };
-
   return (
     <CenteredWrapper>
       <InfoBlock>
@@ -83,12 +100,16 @@ function CheckPage() {
         <p>{address}</p>
         <p>{selectedDate}</p>
         <p>{selectedTime}</p>
+        <p>{price.endsWith('원') ? price : `${price}원`}</p>
         <br></br>
         <br></br>
-        <p>보유 포인트: </p>
-        <p>부족 포인트: </p>
-        <PayButton onClick={handlePayment}>결제하기</PayButton>
-      </InfoBlock>
+        <p>보유 포인트: {userPoints}원</p>
+        <p>부족 포인트: {requiredPoints > 0 ? requiredPoints : 0}원</p>
+        {requiredPoints > 0 ? (
+          <PayButton onClick={handlePayment}>충전하기</PayButton>
+        ) : (
+          <PayButton onClick={handlePayment}>결제하기</PayButton>
+        )}      </InfoBlock>
     </CenteredWrapper>
   );
 }

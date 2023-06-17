@@ -15,7 +15,6 @@ const InfoBlock = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
-  font-family: 'GmarketMedium', sans-serif;
 
   p {
     margin: 10px 0;
@@ -50,7 +49,7 @@ const MypageButton = styled.button`
 
 const Title = styled.h1`
   margin-bottom: 10px;
-  font-size: 42px;
+  font-size: 40px;
 `;
 
 const Complete = () => {

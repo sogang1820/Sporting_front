@@ -1,0 +1,5 @@
+# Ignore node_modules directory
+node_modules/
+node_modules/.cache/default-development
+# Ignore .cache directory
+.cache/

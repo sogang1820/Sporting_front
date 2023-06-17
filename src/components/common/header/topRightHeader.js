@@ -1,17 +1,17 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import HeaderSignIn from "./headerSignIn";
 import HeaderSignUp from "./headerSignUp";
 import HeaderUser from "./headerUser";
 
-const TopRightHeader = ({ isLoggedIn, username, onLogout }) => {
+const TopRightHeader = ({ isLoggedIn, user_id, onLogout }) => {
     console.log(isLoggedIn);
+
     return (
         <>
             <TopRightHeaderWrap>
                 {isLoggedIn ? (
-                    <HeaderUser username={username} />
+                    <HeaderUser user_id={user_id} />
                 ) : (
                     <>
                         <HeaderSignIn />
@@ -29,4 +29,5 @@ const TopRightHeaderWrap = styled.div`
     height: 100%;
     display: flex;
     justify-content: center;
+    margin-right: 2rem;
 `;

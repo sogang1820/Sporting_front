@@ -4,46 +4,12 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const MyPagePrivateInfo = ({ onLogin }) => {
-    const user = useSelector((state) => state.auth.user);
-    const [username, setUsername] = useState("");
-    const [phone, setPhone] = useState("");
-    const [isManager, setIsManager] = useState(false);
-    const [points, setPoints] = useState(0);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            try {
-                if (user && user.accessToken) {
-                    const response = await fetch(
-                        `http://localhost:8000/users/${user.user_id}/profile`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${user.accessToken}`,
-                            },
-                        }
-                    );
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        setUsername(data.username);
-                        setPhone(data.phone_number);
-                        setIsManager(data.is_manager);
-                        setPoints(data.points);
-                    } else {
-                        console.error("사용자 정보 요청 실패");
-                    }
-                }
-            } catch (error) {
-                console.error("사용자 정보 요청 에러:", error);
-            }
-        };
-
-        if (user) {
-            fetchUserProfile();
-        }
-    }, [user]);
-
+    const user = useSelector((state) => state.auth.user);
+    const username = user.userInfo ? user.userInfo.username : null;
+    // const username = user.userInfo ? user.userInfo.username : null;
+    const phone_number = user.userInfo ? user.userInfo.phone_number : null;
+    console.log(username);
     const navigateToMyPage = () => {
         navigate("/mypage");
     };
@@ -54,11 +20,11 @@ const MyPagePrivateInfo = ({ onLogin }) => {
             <InfoWrapper>
                 <FieldWrapper>
                     <PrivateInfoField>이름</PrivateInfoField>
-                    <PrivateInfoData>{user.username}</PrivateInfoData>
+                    <PrivateInfoData>{username}</PrivateInfoData>
                 </FieldWrapper>
                 <FieldWrapper>
                     <PrivateInfoField>연락처</PrivateInfoField>
-                    <PrivateInfoData>{phone}</PrivateInfoData>
+                    <PrivateInfoData>{phone_number}</PrivateInfoData>
                 </FieldWrapper>
                 <FieldWrapper>
                     <PrivateInfoField>선호종목</PrivateInfoField>
@@ -67,7 +33,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
                 <FieldWrapper>
                     <PrivateInfoField>보유 포인트</PrivateInfoField>
                     <PrivateInfoData>
-                        <div>{points}pt</div>
+                        <div>pt</div>
                         <FixInfoWrapper>
                             <PointLoad>포인트 충전</PointLoad>
                             <PointWithDraw>포인트 인출</PointWithDraw>

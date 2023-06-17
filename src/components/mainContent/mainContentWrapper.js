@@ -15,7 +15,7 @@ const MainContentWrapper = () => {
   const navigate = useNavigate();
 
   const handleCircleClick = (value) => {
-    navigate(`/board?sports_category=${value}`);
+    navigate(`/stadiums?sports_category=${value}`);
   };
 
   return (

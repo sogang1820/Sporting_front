@@ -53,7 +53,7 @@ const dummyData = [
   {
     name: "Stadium 1",
     address: "Address 1",
-    price: "Price 1",
+    price: "10000",
     info: "Stadium Information 1",
     image: StadiumImage,
   },
