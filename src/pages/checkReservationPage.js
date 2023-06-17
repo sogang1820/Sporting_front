@@ -3,12 +3,12 @@ import Header from "../components/common/header/header";
 import Check from "../components/reservationContent/checkReservationContent";
 import styled from 'styled-components';
 
-const CheckReservationPage = () => {
+const CheckReservationPage = ({ isLoggedIn, onLogout }) => {
   return (
-      <div>
-          <Header />
-          <Check />
-      </div>
+    <div>
+      <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
+      <Check />
+    </div>
   );
 };
 

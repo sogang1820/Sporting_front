@@ -5,10 +5,10 @@ import styled from 'styled-components';
 
 const ConfirmationPage = () => {
   return (
-      <div>
-          <Header />
-          <Confirmation />
-      </div>
+    <div>
+      <Header />
+      <Confirmation />
+    </div>
   );
 };
 

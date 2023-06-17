@@ -6,11 +6,11 @@ import styled from 'styled-components';
 
 const ReservationPage = ({ isLoggedIn, onLogout }) => {
   return (
-      <div>
-          <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-          <Information />
-          <Reservation />
-      </div>
+    <div>
+      <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
+      <Information />
+      <Reservation />
+    </div>
   );
 };
 

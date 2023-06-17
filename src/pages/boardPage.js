@@ -6,14 +6,14 @@ import styled from 'styled-components';
 
 const BoardPage = ({ isLoggedIn, onLogout }) => {
   return (
-      <div>
-          <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-          <SearchSection/>
-          <br/>
-          <div style={{display:'flex', justifyContent:'center'}}>
-          </div>
-          <BoardSection/>
+    <div>
+      <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
+      <SearchSection />
+      <br />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
       </div>
+      <BoardSection />
+    </div>
   );
 };
 

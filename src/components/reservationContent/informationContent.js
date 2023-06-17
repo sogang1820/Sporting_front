@@ -38,13 +38,13 @@ const Content = styled.div`
 function InformationPage({ name, address, price, info, image }) {
   return (
     <InfoBlock>
-        <Image src={image} alt="stadium image" />
-        <Content>
-          <h2>{name}</h2>
-          <p>{address}</p>
-          <p>{price}</p>
-          <p>{info}</p>
-        </Content>
+      <Image src={image} alt="stadium image" />
+      <Content>
+        <h2>{name}</h2>
+        <p>{address}</p>
+        <p>{price}</p>
+        <p>{info}</p>
+      </Content>
     </InfoBlock>
   );
 }
@@ -77,7 +77,7 @@ const dummyData = [
     price: "가격 4",
     info: "체육 시설 정보 4",
     image: StadiumImage
-  },{
+  }, {
     name: "Stadium 5",
     address: "Address 5",
     price: "Price 5",
@@ -90,7 +90,7 @@ const dummyData = [
     price: "가격 6",
     info: "체육 시설 정보 6",
     image: StadiumImage
-  },{
+  }, {
     name: "Stadium 7",
     address: "Address 7",
     price: "Price 7",
