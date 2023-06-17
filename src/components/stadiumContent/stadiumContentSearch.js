@@ -50,6 +50,8 @@ const Input = styled.input`
   background-color: #F8F6F4;
   color: #000000;
   font-size: 14px;
+  font-family: 'GmarketLight', sans-serif;
+  outline: none;
 `;
 
 const SearchButton = styled.button`
@@ -65,7 +67,7 @@ const SearchButton = styled.button`
   align-items: center;
 `;
 
-function SearchPage() {
+const StadiumContentSearch = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -102,21 +104,13 @@ function SearchPage() {
   };
 
   const handleSearch = () => {
-    const query = queryString.stringify({
+    const query = {
       sports_category,
       stadium_location,
       stadium_name,
       reservation,
-    });
-
-    axios
-      .get(`http://localhost:8000/stadiums?${query}`)
-      .then(response => {
-        navigate('/stadiums', { state: response.data });
-      })
-      .catch(error => {
-        console.error('Failed to fetch stadiums', error);
-      });
+    };
+    navigate('/stadiums?' + queryString.stringify(query));
   };
 
   return (
@@ -214,6 +208,6 @@ function SearchPage() {
       </div>
     </SearchBlock>
   );
-}
+};
 
-export default SearchPage;
+export default StadiumContentSearch;

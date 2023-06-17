@@ -54,7 +54,7 @@ function CheckPage() {
   const [selectedTime, setSelectedTime] = useState('');
   const { name, address, price, image } = location.state || {};
 
-  const [userPoints, setUserPoints] = useState(1000);
+  const [userPoints, setUserPoints] = useState(100000);
   const currentPoints = userPoints;
   const requiredPoints = price - userPoints;
 
@@ -109,7 +109,8 @@ function CheckPage() {
           <PayButton onClick={handlePayment}>충전하기</PayButton>
         ) : (
           <PayButton onClick={handlePayment}>결제하기</PayButton>
-        )}      </InfoBlock>
+        )}
+      </InfoBlock>
     </CenteredWrapper>
   );
 }

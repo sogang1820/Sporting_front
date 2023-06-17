@@ -1,8 +1,9 @@
 import { Provider } from "react-redux";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Main from "./pages/mainPage";
 import Login from "./pages/loginPage";
-import Board from "./pages/boardPage";
+import Stadiums from "./pages/stadiumsPage";
 import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
 import CheckReservation from "./pages/checkReservationPage";
@@ -20,6 +21,7 @@ const App = () => {
     // const password = useSelector((state) => state.auth.password);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
+
 
     // useEffect(() => {
     //     const checkLoginStatus = async () => {
@@ -79,12 +81,29 @@ const App = () => {
                             element={<Login onLogin={handleLogin} />}
                         />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="/stadiums" element={<Board />} />
+                        <Route
+                            path="/stadiums"
+                            element={
+                                <Stadiums
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />
+                            }
+                        />
                         <Route path="/reservation" element={<Reservation />} />
-                        <Route path="/checkReservation" element={<CheckReservation />} />
-                        <Route path="/confirmation" element={<Confirmation />} />
+                        <Route
+                            path="/checkReservation"
+                            element={<CheckReservation />}
+                        />
+                        <Route
+                            path="/confirmation"
+                            element={<Confirmation />}
+                        />
                         <Route path="/payment" element={<Payment />} />
-                        <Route path="/reservationComplete" element={<ReservationComplete />} />
+                        <Route
+                            path="/reservationComplete"
+                            element={<ReservationComplete />}
+                        />
                         <Route
                             path="/mypage"
                             element={
