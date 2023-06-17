@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 const SearchBlock = styled.div`
 width: 90%;
@@ -17,7 +19,7 @@ padding-left: 50px;
 margin-top: 32px;
 display: flex;
 align-items: center;
-font-size: 16px
+font-size: 15px
 `
 
 const SelectWrapper = styled.div`
@@ -34,19 +36,58 @@ const SelectBox = styled.select`
   border-radius: 3px;
   background-color: #ffffff;
   color: #000000;
-  font-size: 15px;
+  font-size: 14px;
 `;
 
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  margin-top: 16px;
+`;
+
+const Input = styled.input`
+  padding: 4px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  background-color: #F8F6F4;
+  color: #000000;
+  font-size: 14px;
+`;
+
+const SearchButton = styled.button`
+  padding: 5px 10px;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-size: 14px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  font-family: 'GmarketLight', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  `;
+
 function SearchPage() {
-  const [sport, setSport] = useState('baseball');
-  const [region, setRegion] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [sports_category, setSport] = useState('');
+  const [stadium_location, setRegion] = useState('');
   const [reservation, setReservation] = useState('all');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
+  const [stadium_name, setStadiumName] = useState('');
+
+  useEffect(() => {
+    const parsed = queryString.parse(location.search);
+    if (parsed.sports_category) {
+      setSport(parsed.sports_category);
+    }
+  }, [location]);
 
   const handleClickRadioButton1 = (e) => {
     console.log(e.target.value);
     setSport(e.target.value);
+    navigate(`/board?sports_category=${e.target.value}`);
   }
 
   const handleClickRadioButton2 = (e) => {
@@ -59,39 +100,54 @@ function SearchPage() {
     setRegion(e.target.value);
   }
 
+  const handleStadiumNameChange = (e) => {
+    setStadiumName(e.target.value);
+  };
+
+  const handleSearch = () => {
+    const query = queryString.stringify({
+      sports_category,
+      stadium_location,
+      stadium_name,
+      reservation,
+    });
+
+    navigate(`/board?${query}`);
+  };
+
   return <SearchBlock>
     <div>
-        종목
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input
+      종목
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input
         type="radio"
         value="baseball"
-        checked={sport ==="baseball"}
+        checked={sports_category === "baseball"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 야구 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 야구 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="basketball"
-        checked={sport ==="basketball"}
+        checked={sports_category === "basketball"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 농구 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 농구 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="futsal"
-        checked={sport ==="futsal"}
+        checked={sports_category === "futsal"}
         onChange={handleClickRadioButton1}
-        />
-        <label> 풋살 </label>
+      />
+      <label> 풋살 </label>
 
-        <br/><br/>
+      <br /><br />
       <SelectWrapper>
         지역
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <SelectBox value={region} onChange={handleSelect}>
+        <SelectBox value={stadium_location} onChange={handleSelect}>
           <option value="NULL">지역</option>
           <option value="서울">서울</option>
           <option value="부산">부산</option>
@@ -113,37 +169,49 @@ function SearchPage() {
 
         </SelectBox>
       </SelectWrapper>
-      <br/>
+      <br />
 
       예약
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input
         type="radio"
         value="all"
-        checked={reservation ==="all"}
+        checked={reservation === "all"}
         onChange={handleClickRadioButton2}
-        />
-        <label> 전체 </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> 전체 </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="spor+ing"
-        checked={reservation ==="spor+ing"}
+        checked={reservation === "spor+ing"}
         onChange={handleClickRadioButton2}
-        />
-        <label> Spor+ing </label>
-        &nbsp;&nbsp;
-        <input
+      />
+      <label> Spor+ing </label>
+      &nbsp;&nbsp;
+      <input
         type="radio"
         value="other"
-        checked={reservation ==="other"}
+        checked={reservation === "other"}
         onChange={handleClickRadioButton2}
-        />
-        <label> 외부사이트 </label>
+      />
+      <label> 외부사이트 </label>
 
-        <br/>
-      </div>
-    </SearchBlock>
+      <br />
+
+      <InputWrapper>
+        검색
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <Input
+          type="text"
+          value={stadium_name}
+          onChange={handleStadiumNameChange}
+        />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <SearchButton onClick={handleSearch}>검색</SearchButton>
+      </InputWrapper>
+    </div>
+  </SearchBlock>
 }
 
 export default SearchPage;
