@@ -1,244 +1,183 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from "react-router-dom";
 import StadiumImage from "../../assets/img/logo.png";
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Paginate from 'react-paginate';
+import axios from 'axios';
 
 const BorderBlock = styled.div`
-width: 80%;
-position: relative;
-background: #FFFFFF;
-border-top: 1px solid #000000;
-border-bottom: 1px solid #000000;
-margin: 0 auto;
-padding-left: 50px;
-margin-top: 32px;
-display: flex;
-align-items: center;
-`
+  width: 65%;
+  height: 150px;
+  position: relative;
+  background: #F8F6F4;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  margin: 0 auto;
+  padding-left: 30px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+`;
 
 const Image = styled.img`
-width: 120px;
-height: 90px;
-float: left;
-margin-right: 20px;
-`
+  width: 120px;
+  float: left;
+  margin-right: 20px;
+  object-fit: cover;
+`;
 
 const Content = styled.div`
-flex-direction: column;
-`
+  flex-direction: column;
+`;
 
 const DatePickerContainer = styled.div`
-display: flex;
-align-items: center;
-width: 100%;
-margin-right: 5px;
-`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-right: 5px;
+`;
 
 const CustomDatePicker = styled(DatePicker)`
-width: 90px;
-height: 20px;
-text-align: center;
-`
+  width: 90px;
+  height: 20px;
+  text-align: center;
+  cursor: pointer;
+  font-family: 'GmarketLight', sans-serif;
+`;
 
 const TimeBlockContainer = styled.div`
-display: flex;
-`
+  display: flex;
+`;
 
 const TimeBlock = styled.div`
-padding: 5px;
-margin: 5px;
-border: 1px solid #000000;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-cursor: pointer;
-white-space: nowrap;
-font-size: 12px;
+  background: #FFFFFF;
+  padding: 5px;
+  margin: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
 
-&:hover {
-  background-color: #ddd;
-}
-`
+  &:hover {
+    background-color: #ddd;
+  }
+`;
 
-function Stadium({ name, address, image }) {   
+const Title = styled.h2`
+  cursor: pointer;
+`;
+
+function Stadium({ name, address, image, price, info }) {
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState('');
+
+  const handleStadiumClick = () => {
+    navigate(`/reservation?name=${encodeURIComponent(name)}`, {
+      state: { name, address, image, price, info },
+    });
+  };
 
   const handleDateSelect = (date) => {
-    console.log(date);
     setSelectedDate(date);
-  }
+  };
+
+  const handleTimeSelect = (time) => {
+    setSelectedTime(time);
+    navigate(`/checkreservation?name=${encodeURIComponent(name)}&date=${selectedDate.toISOString().split('T')[0]}&time=Time%20${time}`, {
+      state: { name, address, image, price, info },
+    });
+  };
 
   const blocks = new Array(8).fill(null);
 
   return (
     <div>
-        <BorderBlock>
-            <Image src={StadiumImage} alt="stadium image" />
-            <Content>
-            <h2>{name}</h2>
-            <p>{address}</p>
-            <DatePickerContainer>
-              <CustomDatePicker
-                selected={selectedDate}
-                onChange={handleDateSelect}
-                dateFormat="yyyy-MM-dd"
-              />
-              <TimeBlockContainer>
+      <BorderBlock>
+        <Image src={StadiumImage} alt="stadium image" />
+        <Content>
+          <Title onClick={handleStadiumClick}>{name}</Title>
+          <p>{address}</p>
+          <DatePickerContainer>
+            <CustomDatePicker
+              selected={selectedDate}
+              onChange={handleDateSelect}
+              dateFormat="yyyy-MM-dd"
+            />
+            <TimeBlockContainer>
               {blocks.map((_, index) => (
-                <TimeBlock key={index} onClick={()=>console.log(`Time ${index+1} selected.`)}>
+                <TimeBlock key={index} onClick={() => handleTimeSelect(index + 1)}>
                   Time {index + 1}
-                 </TimeBlock>
+                </TimeBlock>
               ))}
-              </TimeBlockContainer>
-            </DatePickerContainer>
-          </Content>
-        </BorderBlock>
+            </TimeBlockContainer>
+          </DatePickerContainer>
+        </Content>
+      </BorderBlock>
     </div>
   );
 }
 
-const dummyData = [
-  {
-    name: "Stadium 1",
-    address: "Address 1",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 2",
-    address: "주소 2",
-    image: {StadiumImage}
-  },
-  {
-    name: "Stadium 3",
-    address: "Address 3",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 4",
-    address: "주소 4",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 5",
-    address: "Address 5",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 6",
-    address: "주소 6",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 7",
-    address: "Address 7",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 8",
-    address: "주소 8",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 9",
-    address: "Address 9",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 10",
-    address: "주소 10",
-    image: {StadiumImage}
-  },
-  {
-    name: "Stadium 11",
-    address: "Address 11",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 12",
-    address: "주소 12",
-    image: {StadiumImage}
-  },
-  {
-    name: "Stadium 13",
-    address: "Address 13",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 14",
-    address: "주소 14",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 15",
-    address: "Address 15",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 16",
-    address: "주소 16",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 17",
-    address: "Address 17",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 18",
-    address: "주소 18",
-    image: {StadiumImage}
-  },{
-    name: "Stadium 19",
-    address: "Address 19",
-    image: {StadiumImage}
-  },
-  {
-    name: "체육 시설 20",
-    address: "주소 20",
-    image: {StadiumImage}
-  },
-];
-
 const per_page = 7;
 
 const Pagination = styled(Paginate)`
-display: flex;
-justify-content: center;
-padding: 20px;
-cursor: pointer;
-
-ul {
-  padding: 0;
-  margin 0;
   display: flex;
   justify-content: center;
-}
+  padding: 20px;
+  cursor: pointer;
 
-li {
-  margin: 0 5px;
-  list-style: none;
-}
-`
+  ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  li {
+    margin: 0 5px;
+    list-style: none;
+  }
+`;
 
 function StadiumPage() {
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
 
-  function handlePageClick({selected: selectedPage}) {
+  useEffect(() => {
+    const stadiums = location.state || [];
+    setFilteredData(stadiums);
+  }, [location]);
+
+  function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
+    window.scrollTo(0, 0);
   }
 
   const offset = currentPage * per_page;
 
-  const currentPageData = dummyData
+  const currentPageData = filteredData
     .slice(offset, offset + per_page)
     .map((data, index) => (
       <Stadium
-      key={index}
-      name={data.name}
-      address={data.address}
-      image={data.image}
+        key={index}
+        name={data.stadium_name}
+        address={data.stadium_location}
+        image={data.stadium_image}
+        price={data.stadium_price}
+        info={data.stadium_info}
       />
     ));
-  
-  const pageCount = Math.ceil(dummyData.length / per_page);
+
+  const pageCount = Math.ceil(filteredData.length / per_page);
 
   return (
     <div>

@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "../components/common/header/header";
-import Check from "../components/reservationContent/checkReservationContent";
+import Complete from "../components/reservationContent/reservationCompleteContent";
 import styled from 'styled-components';
 
-const CheckReservationPage = ({ isLoggedIn, onLogout }) => {
+const ReservationCompletePage = ({ isLoggedIn, onLogout }) => {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-      <Check />
+      <Complete />
     </div>
   );
 };
 
-export default CheckReservationPage;
+export default ReservationCompletePage;
