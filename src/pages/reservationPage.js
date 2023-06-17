@@ -4,10 +4,10 @@ import Information from "../components/reservationContent/informationContent";
 import Reservation from "../components/reservationContent/reservationContent";
 import styled from 'styled-components';
 
-const ReservationPage = () => {
+const ReservationPage = ({ isLoggedIn, onLogout }) => {
   return (
       <div>
-          <Header />
+          <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
           <Information />
           <Reservation />
       </div>

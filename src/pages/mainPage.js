@@ -6,7 +6,7 @@ const MainPage = ({ isLoggedIn, onLogout }) => {
     return (
         <div>
             <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-            <MainContentWrapper isLoggedIn={isLoggedIn} onLogout={onLogout} />
+            <MainContentWrapper />
         </div>
     );
 };

@@ -235,13 +235,12 @@ function StadiumPage() {
       );
     }
 
-    if (stadium_location && stadium_location !== "NULL") {
-      const filteredLocation = filtered.filter(item =>
-        item.stadium_location.slice(0, 2) === stadium_location.slice(0, 2)
+    if (stadium_location && stadium_location !== "ALL") {
+      filtered = filtered.filter(item =>
+        item.stadium_location.toLowerCase().startsWith(stadium_location.toLowerCase().substring(0, 2))
       );
-      filtered = filteredLocation;
     }
-  
+
     setFilteredData(filtered);
   }, [location]);
 
