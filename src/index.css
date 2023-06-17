@@ -1,13 +1,40 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+@font-face {
+    font-family: "MyCustomFont";
+    src: url("../src/fonts/Jua/Jua-Regular.ttf") format("truetype");
+    src: url("../src/fonts/GmarketSansTTF/GmarketSansTTFLight.ttf");
+
+    /* 추가적인 폰트 스타일 설정 */
+}
+@font-face {
+    font-family: "GmarketLight";
+    src: url("../src/fonts/GmarketSansTTF/GmarketSansTTFLight.ttf")
+        format("truetype");
+}
+@font-face {
+    font-family: "GmarketMedium";
+    src: url("../src/fonts/GmarketSansTTF/GmarketSansTTFMedium.ttf")
+        format("truetype");
+}
+@font-face {
+    font-family: "GmarketBold";
+    src: url("../src/fonts/GmarketSansTTF/GmarketSansTTFBold.ttf")
+        format("truetype");
+}
+
+body {
+    font-family: "MyCustomFont", sans-serif;
 }
