@@ -131,7 +131,7 @@ const dummyData = [
     stadium_name: "Stadium 1",
     sports_category: "baseball",
     stadium_location: "경기도 부천시",
-    stadium_price: "Price 1",
+    stadium_price: "10000",
     stadium_info: "Stadium Information 1",
     stadium_image: StadiumImage
   },
