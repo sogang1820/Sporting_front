@@ -11,6 +11,7 @@ const SignUpInnerWrapper = () => {
         username: "",
         phone_number: "",
         is_manager: false,
+        passwordConfirm: "", // passwordConfirm 속성 추가
     });
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -37,6 +38,7 @@ const SignUpInnerWrapper = () => {
                 console.log(responseData);
                 const userId = responseData.user_id;
                 console.log("사용자 ID:", userId);
+                navigate("/");
             })
             .catch((error) => {
                 console.log("회원가입 실패:", error.response.data);
@@ -44,9 +46,7 @@ const SignUpInnerWrapper = () => {
             });
     };
 
-    const handleSignUpClick = () => {
-        navigate("/");
-    };
+    const handleSignUpClick = () => {};
 
     return (
         <SignUpWrapper>
@@ -126,8 +126,8 @@ const SignUpInnerWrapper = () => {
                     </SignupManager>
                 </SignupLabel>
                 <br />
-                <SignUpButton onClick={handleSignUpClick} type="submit">
-                    회원가입
+                <SignUpButton type="submit">
+                    <div>회원가입</div>
                 </SignUpButton>
             </SignUpForm>
         </SignUpWrapper>
