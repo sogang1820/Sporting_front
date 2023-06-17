@@ -67,7 +67,7 @@ const App = () => {
                         element={<Login onLogin={handleLogin} />}
                     />
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/board" element={<Board />} />
+                    <Route path="/stadiums" element={<Board />} />
                     <Route path="/reservation" element={<Reservation />} />
                     <Route path="/checkReservation" element={<CheckReservation />} />
                     <Route path="/confirmation" element={<Confirmation />} />
