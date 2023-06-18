@@ -81,88 +81,96 @@ const CalendarWrapper = styled.div`
 `;
 
 function ReservationPage() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { id, name, address, price, info, image } = location.state || {};
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id, name, address, price, info, image } = location.state || {};
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [operatingHours, setOperatingHours] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
+  const [operatingHours, setOperatingHours] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-    useEffect(() => {
-        const fetchOperatingHours = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8000/stadiums/${id}`
-                );
-                const { operating_hours } = response.data;
-                setOperatingHours(operating_hours);
-            } catch (error) {
-                console.error("Error fetching operating hours:", error);
-            }
-        };
-
-        fetchOperatingHours();
-    }, [id]);
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
-
-    const handleBlockClick = (time) => {
-        const formattedDate = selectedDate.toISOString().split("T")[0];
-        const formattedTime = `${time[0].start} - ${time[1].end}`;
-
-        navigate(
-            `/checkReservation?id=${id}&date=${encodeURIComponent(
-                selectedDate.toISOString().split("T")[0]
-            )}&time=${encodeURIComponent(formattedTime)}`,
-            {
-                state: {
-                    name,
-                    address,
-                    price,
-                    info,
-                    image,
-                    selectedDate: formattedDate,
-                    selectedTime: formattedTime,
-                },
-            }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  useEffect(() => {
+    const fetchOperatingHours = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/stadiums/${id}`
         );
+        const { operating_hours } = response.data;
+        setOperatingHours(operating_hours);
+      } catch (error) {
+        console.error("Error fetching operating hours:", error);
+      }
     };
 
-    return (
-        <PageWrapper>
-            <CalendarWrapper>
-                <span className="start-date-label">Start Date</span>
-                <DatePicker
-                    selected={selectedDate}
-                    onChange={handleDateChange}
-                    dateFormat="yyyy-MM-dd"
-                />
-            </CalendarWrapper>
-            {operatingHours.map((time, index) => (
-                <TimeBlock
-                    key={index}
-                    onClick={() => {
-                        handleBlockClick(time);
-                        handleOpenModal();
-                    }}
-                >
-                    {time[0].start} - {time[1].end}
-                </TimeBlock>
-            ))}
-            {isModalOpen && (
-                <CheckReservationModal onClose={handleCloseModal} />
-            )}
-        </PageWrapper>
+    fetchOperatingHours();
+  }, [id]);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleBlockClick = (time) => {
+    const today = new Date();
+    const localDate = new Date(today.getTime() - (today.getTimezoneOffset() * 60000));
+    const formattedDate = localDate.toISOString().split("T")[0];
+    const formattedTime = `${time[0].start} - ${time[1].end}`;
+
+    const formattedSelectedDate = new Date(
+      selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+    
+    navigate(
+      `/checkReservation?id=${id}&date=${encodeURIComponent(
+        formattedSelectedDate
+      )}&time=${encodeURIComponent(formattedTime)}`,
+      {
+        state: {
+          name,
+          address,
+          price,
+          info,
+          image,
+          selectedDate: formattedDate,
+          selectedTime: formattedTime,
+        },
+      }
     );
+  };
+
+  return (
+    <PageWrapper>
+      <CalendarWrapper>
+        <span className="start-date-label">Start Date</span>
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="yyyy-MM-dd"
+        />
+      </CalendarWrapper>
+      {operatingHours.map((time, index) => (
+        <TimeBlock
+          key={index}
+          onClick={() => {
+            handleBlockClick(time);
+            handleOpenModal();
+          }}
+        >
+          {time[0].start} - {time[1].end}
+        </TimeBlock>
+      ))}
+      {isModalOpen && (
+        <CheckReservationModal onClose={handleCloseModal} />
+      )}
+    </PageWrapper>
+  );
 }
 
 export default ReservationPage;

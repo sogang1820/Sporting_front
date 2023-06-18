@@ -63,6 +63,7 @@ function CheckPage({ onLogin }) {
     acc[key] = value;
     return acc;
   }, {});
+  console.log(id);
 
   useEffect(() => {
     // user 객체의 변경을 감지하여 points 값을 업데이트
@@ -112,9 +113,9 @@ const handlePayment = () => {
       }
     });
   } else {
-    navigate('/reservationComplete', {
+    navigate(`/reservationComplete?id=${id}`, {
       state: {
-        id: stadium.id,
+        id: id,
         stadium_img: stadium.stadium_img,
         stadium_name: stadium.stadium_name,
         stadium_location: stadium.stadium_location,
@@ -140,7 +141,7 @@ const handlePayment = () => {
         <br></br>
         <p>보유 포인트: {points}원</p>
         {lackingPoints > 0 ? (
-          <PayButton onClick={handlePayment}>충전하기</PayButton>
+          <PayButton onClick={handlePayment}>예약하기</PayButton>
         ) : (
           <PayButton onClick={handlePayment}>결제하기</PayButton>
         )}
