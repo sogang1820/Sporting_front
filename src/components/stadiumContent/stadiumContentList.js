@@ -118,7 +118,7 @@ const StadiumContentList = () => {
       {currentPageData.length > 0 ? (
         currentPageData
       ) : (
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No stadiums available.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loading...</p>
       )}
       <Pagination
         previousLabel={'← Previous'}

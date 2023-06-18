@@ -62,6 +62,14 @@ const InformationPage = () => {
         return <div>Loading...</div>;
     }
 
+    // const {
+    //     stadium_name,
+    //     stadium_location,
+    //     stadium_price,
+    //     stadium_info,
+    //     stadium_img,
+    // } = stadiumInfo;
+
     const {
         stadium_name,
         stadium_location,
@@ -75,9 +83,9 @@ const InformationPage = () => {
             <Image src={stadium_img} alt="stadium image" />
             <Content>
                 <h2>{stadium_name}</h2>
-                <p>{stadium_location}</p>
-                <p>{stadium_price}</p>
-                <p>{stadium_info}</p>
+                <p>주소: {stadium_location}</p>
+                <p>가격: {stadium_price}원</p>
+                <p>정보: {stadium_info}</p>
             </Content>
         </InfoBlock>
     );

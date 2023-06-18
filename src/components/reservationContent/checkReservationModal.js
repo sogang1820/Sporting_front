@@ -19,6 +19,8 @@ const ModalContent = styled.div`
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+    max-height: 80%;
+    overflow-y: auto;
 `;
 
 const CheckReservationModal = ({ onClose }) => {
