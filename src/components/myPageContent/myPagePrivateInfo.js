@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import PaymentModal from "../paymentContent/paymentModal";
 
 const MyPagePrivateInfo = ({ onLogin }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [points, setPoints] = useState(null); // 초기값은 null로 설정
@@ -27,7 +28,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
         // user 객체의 변경을 감지하여 points 값을 업데이트
         if (user.userInfo) {
             setPoints(user.userInfo.points);
-            console.log("hello, points are changed")
+            console.log("hello, points are changed");
         }
     }, [user]);
 
