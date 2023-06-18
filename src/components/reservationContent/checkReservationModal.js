@@ -24,11 +24,11 @@ const ModalContent = styled.div`
 const CheckReservationModal = ({ onClose }) => {
     const navigate = useNavigate();
     const navigateToMyPage = () => {
-        navigate("/mypage");
+        navigate("/");
     };
     const handleButtonClick = () => {
         onClose(); // onClose 함수 호출
-        navigateToMyPage(); // navigateToMyPage 함수 호출
+        // navigateToMyPage(); // navigateToMyPage 함수 호출
 
         console.log("i'm done");
     };

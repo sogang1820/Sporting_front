@@ -119,22 +119,22 @@ function ReservationPage() {
         const formattedDate = selectedDate.toISOString().split("T")[0];
         const formattedTime = `${time[0].start} - ${time[1].end}`;
 
-        navigate(
-            `/checkReservation?date=${encodeURIComponent(
-                selectedDate.toISOString().split("T")[0]
-            )}&time=${encodeURIComponent(formattedTime)}`,
-            {
-                state: {
-                    name,
-                    address,
-                    price,
-                    info,
-                    image,
-                    selectedDate: formattedDate,
-                    selectedTime: formattedTime,
-                },
-            }
-        );
+        // navigate(
+        //     `/checkReservation?date=${encodeURIComponent(
+        //         selectedDate.toISOString().split("T")[0]
+        //     )}&time=${encodeURIComponent(formattedTime)}`,
+        //     {
+        //         state: {
+        //             name,
+        //             address,
+        //             price,
+        //             info,
+        //             image,
+        //             selectedDate: formattedDate,
+        //             selectedTime: formattedTime,
+        //         },
+        //     }
+        // );
     };
 
     return (
