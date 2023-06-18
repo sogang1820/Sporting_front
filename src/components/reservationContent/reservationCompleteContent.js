@@ -108,8 +108,10 @@ const Complete = () => {
   };
 
   useEffect(() => {
-    makeReservation();
-  }, []);
+    if (user_id && accessToken) {
+      makeReservation();
+    }
+  }, [user_id, accessToken]);
 
   return (
     <CenteredWrapper>
