@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import PaymentPage from "./paymentPage";
+import CheckReservationPage from "./checkReservationPage";
 
 const ModalWrapper = styled.div`
     position: fixed;
@@ -21,25 +21,25 @@ const ModalContent = styled.div`
     border-radius: 8px;
 `;
 
-const PaymentModal = ({ onClose }) => {
+const CheckReservationModal = ({ onClose }) => {
     const navigate = useNavigate();
     const navigateToMyPage = () => {
         navigate("/mypage");
     };
     const handleButtonClick = () => {
-        navigateToMyPage(); // navigateToMyPage 함수 호출
         onClose(); // onClose 함수 호출
+        navigateToMyPage(); // navigateToMyPage 함수 호출
 
         console.log("i'm done");
     };
     return (
         <ModalWrapper>
             <ModalContent>
-                <PaymentPage />
+                <CheckReservationPage />
                 <button onClick={handleButtonClick}>Close</button>
             </ModalContent>
         </ModalWrapper>
     );
 };
 
-export default PaymentModal;
+export default CheckReservationModal;

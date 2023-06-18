@@ -6,7 +6,7 @@ import Login from "./pages/loginPage";
 import Stadiums from "./pages/stadiumsPage";
 import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
-import CheckReservation from "./pages/checkReservationPage";
+import CheckReservation from "./components/reservationContent/checkReservationPage";
 import Confirmation from "./pages/confirmationPage";
 import Payment from "./components/paymentContent/paymentPage";
 import ReservationComplete from "./pages/reservationCompletePage";
@@ -89,18 +89,23 @@ const App = () => {
                                 />
                             }
                         />
-                        <Route path="/reservations" element={
-                            <Reservation
-                                isLoggedIn={isLoggedIn}
-                                onLogout={handleLogout}
-                            />} />
+                        <Route
+                            path="/reservations"
+                            element={
+                                <Reservation
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />
+                            }
+                        />
                         <Route
                             path="/checkReservation"
                             element={
                                 <CheckReservation
                                     isLoggedIn={isLoggedIn}
                                     onLogout={handleLogout}
-                                />}
+                                />
+                            }
                         />
                         <Route
                             path="/confirmation"
@@ -108,15 +113,18 @@ const App = () => {
                                 <Confirmation
                                     isLoggedIn={isLoggedIn}
                                     onLogout={handleLogout}
-                                />}
+                                />
+                            }
                         />
                         {/* <Route path="/payment" element={<PaymentContainer />} /> */}
                         <Route
                             path="/reservationComplete"
-                            element={<ReservationComplete
-                                isLoggedIn={isLoggedIn}
-                                onLogout={handleLogout}
-                            />}
+                            element={
+                                <ReservationComplete
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />
+                            }
                         />
                         <Route
                             path="/mypage"
