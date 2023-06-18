@@ -18,15 +18,7 @@ const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, s
   };
 
   const handleStadiumClick = () => {
-    navigate(`/reservation?name=${encodeURIComponent(stadium_name)}`, {
-      state: {
-        stadium_name: stadium_name,
-        stadium_location: stadium_location,
-        stadium_img: stadium_img,
-        stadium_price: stadium_price,
-        stadium_info: stadium_info,
-      },
-    });
+    navigate(`/stadium-detail?name=${encodeURIComponent(stadium_name)}`);
   };
 
   const handleTimeSelect = (time) => {
@@ -88,27 +80,24 @@ const StadiumContentList = () => {
           sports_category: sportsCategory,
         },
       });
-  
-      const formattedData = response.data.filter((stadium) =>
-        stadium.stadium_location.startsWith(stadiumLocation.slice(0, 2))
-      ).map((stadium) => ({
-        stadium_name: stadium.stadium_name,
-        stadium_location: stadium.stadium_location,
-        sports_category: stadium.sports_category,
-        stadium_img: stadium.stadium_img,
-        stadium_price: stadium.stadium_price,
-        stadium_info: stadium.stadium_info,
-      }));
 
-      const filteredByName = formattedData.filter((stadium) =>
-      stadium.stadium_name.toLowerCase().includes(stadiumName.toLowerCase())
-    );
+      const today = new Date().toISOString().split('T')[0]; // Get today's date
 
-    const filteredByCategory = filteredByName.filter(
-      (stadium) => stadium.sports_category === sportsCategory
-    );
+      const formattedData = response.data
+        .filter((stadium) => stadium.stadium_location.startsWith(stadiumLocation.slice(0, 2)))
+        .map((stadium, index) => ({
+          _id: index + 1,
+          stadium_name: stadium.stadium_name,
+          stadium_location: stadium.stadium_location,
+          sports_category: stadium.sports_category,
+          stadium_img: stadium.stadium_img,
+          stadium_price: stadium.stadium_price,
+          stadium_info: stadium.stadium_info,
+          date: new Date(stadium.date).toISOString().split('T')[0], // 날짜 형식을 "yyyy-mm-dd"로 변환
+        }))
+        .filter((stadium) => stadium.date === today);
 
-    setFilteredData(filteredByCategory);    
+      setFilteredData(formattedData);
     } catch (error) {
       console.error('Error fetching stadium data:', error);
     }
@@ -139,6 +128,7 @@ const StadiumContentList = () => {
         stadium_img={stadium.stadium_img}
         stadium_price={stadium.stadium_price}
         stadium_info={stadium.stadium_info}
+        date={stadium.date}
       />
     ));
 

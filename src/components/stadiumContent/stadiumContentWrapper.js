@@ -3,7 +3,7 @@ import StadiumContentSearch from "./stadiumContentSearch";
 import StadiumContentList from "./stadiumContentList";
 import styled from 'styled-components';
 
-const StadiumContentWrapper = ({ isLoggedIn, onLogout }) => {
+const StadiumContentWrapper = () => {
     return (
         <div>
             <Wrapper>
