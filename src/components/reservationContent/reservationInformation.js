@@ -40,14 +40,12 @@ const InformationPage = () => {
   const [stadiumInfo, setStadiumInfo] = useState(null);
   const queryParams = new URLSearchParams(location.search);
   const stadiumId = queryParams.get('id');
-  console.log(stadiumId);
 
   useEffect(() => {
     const fetchStadiumInfo = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/stadiums/${stadiumId}`);
         setStadiumInfo(response.data);
-        console.log(response);
       } catch (error) {
         console.error('Error fetching stadium data:', error);
       }

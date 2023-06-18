@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 const PageWrapper = styled.div`
-width: 80%;
-height: auto;
-background: #F8F6F4;
-border-top: 1px solid #000000;
-border-bottom: 1px solid #000000;
-display: flex;
-position: relative;
-margin: 0 auto;
-margin-top: 20px;
-flex-direction: column;
-align-items: center;
-font-size: 16px;
+  width: 80%;
+  height: auto;
+  background: #F8F6F4;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  display: flex;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
 `;
 
 const TimeBlock = styled.div`
@@ -80,9 +82,30 @@ const CalendarWrapper = styled.div`
 function ReservationPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { name, address, price, info, image } = location.state || {};
-
+  const { id } = location.state || {};
+  const [operatingHours, setOperatingHours] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    const fetchOperatingHours = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/stadiums/${id}`);
+        const { operating_hours } = response.data;
+        setOperatingHours(operating_hours);
+      } catch (error) {
+        console.error('Error fetching operating hours:', error);
+      }
+    };
+
+    fetchOperatingHours();
+  }, [id]);
+
+  useEffect(() => {
+    console.log('Operating Hours:', operatingHours);
+  }, [operatingHours]);
+
+  const numTimeBlocks = operatingHours.length;
+  const { name, address, price, info, image } = location.state || {};
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -107,12 +130,9 @@ function ReservationPage() {
           dateFormat="yyyy-MM-dd"
         />
       </CalendarWrapper>
-      {[...Array(8)].map((_, i) => (
-        <TimeBlock
-          key={i}
-          onClick={() => handleBlockClick(i + 1)}
-        >
-          Time {i + 1}
+      {operatingHours.map((time, index) => (
+        <TimeBlock key={index} onClick={() => handleBlockClick(index + 1)}>
+          {time[0].start} - {time[1].end}
         </TimeBlock>
       ))}
     </PageWrapper>

@@ -18,24 +18,7 @@ const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, s
   };
 
   const handleStadiumClick = () => {
-    navigate(`/reservations?id=${_id}`);
-  };  
-
-  const handleTimeSelect = (time) => {
-    setSelectedTime(time);
-    navigate(
-      `/checkreservation?name=${encodeURIComponent(stadium_name)}&date=${selectedDate.toISOString().split('T')[0]}&time=Time%20${time}`,
-      {
-        state: {
-          stadium_name: stadium_name,
-          stadium_location: stadium_location,
-          stadium_img: stadium_img,
-          stadium_price: stadium_price,
-          stadium_info: stadium_info,
-          operating_hours: operating_hours, // add operating hours
-        },
-      }
-    );
+    navigate(`/reservations?id=${_id}`, { state: { id: _id } });
   };
 
   const blocks = new Array(8).fill(null);
@@ -47,16 +30,7 @@ const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, s
         <Content>
           <Title onClick={handleStadiumClick}>{stadium_name}</Title>
           <p>{stadium_location}</p>
-          <DatePickerContainer>
-            <CustomDatePicker selected={selectedDate} onChange={handleDateSelect} dateFormat="yyyy-MM-dd" />
-            <TimeBlockContainer>
-              {blocks.map((_, index) => (
-                <TimeBlock key={index} onClick={() => handleTimeSelect(index + 1)}>
-                  Time {index + 1}
-                </TimeBlock>
-              ))}
-            </TimeBlockContainer>
-          </DatePickerContainer>
+          <p>가격: {stadium_price}원</p>
         </Content>
       </BorderBlock>
     </div>
