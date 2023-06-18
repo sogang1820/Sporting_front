@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "../components/common/header/header";
-import ReservationContentWrapper from "../components/reservationContent/reservationContentWrapper";
+import StadiumContentWrapper from "../components/stadiumContent/stadiumContentWrapper";
 import styled from 'styled-components';
 
-const ReservationPage = ({ isLoggedIn, onLogout }) => {
+const StadiumsPage = ({ isLoggedIn, onLogout }) => {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
-      <ReservationContentWrapper />
+      <StadiumContentWrapper />
     </div>
   );
 };
 
-export default ReservationPage;
+export default StadiumsPage;

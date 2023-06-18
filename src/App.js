@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Main from "./pages/mainPage";
 import Login from "./pages/loginPage";
-import Board from "./pages/boardPage";
+import Stadiums from "./pages/stadiumsPage";
 import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
 import CheckReservation from "./pages/checkReservationPage";
@@ -84,25 +84,44 @@ const App = () => {
                         <Route
                             path="/stadiums"
                             element={
-                                <Board
+                                <Stadiums
                                     isLoggedIn={isLoggedIn}
                                     onLogout={handleLogout}
                                 />
                             }
                         />
-                        <Route path="/reservation" element={<Reservation />} />
+                        <Route path="/reservations" element={
+                            <Reservation
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />} />
                         <Route
                             path="/checkReservation"
-                            element={<CheckReservation />}
+                            element={
+                                <CheckReservation
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />}
                         />
                         <Route
                             path="/confirmation"
-                            element={<Confirmation />}
+                            element={
+                                <Confirmation
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />}
                         />
-                        <Route path="/payment" element={<Payment />} />
+                        <Route path="/payment" element={
+                            <Payment
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />} />
                         <Route
                             path="/reservationComplete"
-                            element={<ReservationComplete />}
+                            element={<ReservationComplete
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />}
                         />
                         <Route
                             path="/mypage"
