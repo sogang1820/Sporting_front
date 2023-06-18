@@ -6,7 +6,7 @@ import Login from "./pages/loginPage";
 import Stadiums from "./pages/stadiumsPage";
 import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
-import CheckReservation from "./components/reservationContent/checkReservationPage";
+import CheckReservation from "./pages/checkReservationPage";
 import Confirmation from "./pages/confirmationPage";
 import Payment from "./components/paymentContent/paymentPage";
 import ReservationComplete from "./pages/reservationCompletePage";
