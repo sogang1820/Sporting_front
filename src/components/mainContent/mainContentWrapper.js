@@ -14,15 +14,9 @@ const circlesData = [
 const MainContentWrapper = () => {
     const navigate = useNavigate();
 
-<<<<<<< HEAD
-    const handleCircleClick = (value) => {
-        navigate(`/stadiums?sports_category=${value}`);
-    };
-=======
   const handleCircleClick = (value) => {
     navigate(`/stadiums?sports_category=${value}`);
   };
->>>>>>> 00c806e8066ed394e1515f287048a80be303c1a6
 
     return (
         <Wrapper>

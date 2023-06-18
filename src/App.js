@@ -81,14 +81,6 @@ const App = () => {
                             element={<Login onLogin={handleLogin} />}
                         />
                         <Route path="/signup" element={<Signup />} />
-<<<<<<< HEAD
-                        <Route path="/stadiums" element={<Board />} />
-                        <Route path="/reservation" element={<Reservation />} />
-                        <Route path="/checkReservation" element={<CheckReservation />} />
-                        <Route path="/confirmation" element={<Confirmation />} />
-                        <Route path="/payment" element={<Payment />} />
-                        <Route path="/reservationComplete" element={<ReservationComplete />} />
-=======
                         <Route
                             path="/stadiums"
                             element={
@@ -112,7 +104,6 @@ const App = () => {
                             path="/reservationComplete"
                             element={<ReservationComplete />}
                         />
->>>>>>> 00c806e8066ed394e1515f287048a80be303c1a6
                         <Route
                             path="/mypage"
                             element={
@@ -122,10 +113,6 @@ const App = () => {
                                 />
                             }
                         />
-<<<<<<< HEAD
-
-=======
->>>>>>> 00c806e8066ed394e1515f287048a80be303c1a6
                         {/* 추가적인 페이지 라우트를 설정 */}
                     </Routes>
                 </div>
