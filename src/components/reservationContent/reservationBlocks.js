@@ -120,7 +120,7 @@ function ReservationPage() {
         const formattedTime = `${time[0].start} - ${time[1].end}`;
 
         navigate(
-            `/checkReservation?date=${encodeURIComponent(
+            `/checkReservation?id=${id}&date=${encodeURIComponent(
                 selectedDate.toISOString().split("T")[0]
             )}&time=${encodeURIComponent(formattedTime)}`,
             {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -48,63 +49,83 @@ const PayButton = styled.button`
   cursor: pointer;
 `;
 
-function CheckPage() {
+function CheckPage({ onLogin }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { stadium_name, stadium_location, stadium_price, stadium_img, stadium_info, selectedDate, selectedTime } = location.state || {};
-
-  const [userPoints, setUserPoints] = useState(null);
-  const requiredPoints = stadium_price;
+  const { selectedDate, selectedTime } = location.state || {};
+  const [stadium, setStadium] = useState(null);
+  const user = useSelector((state) => state.auth.user);
+  const [points, setPoints] = useState(null); // 초기값은 null로 설정
+  const { id, date, time } = location.search.slice(1)
+  .split('&')
+  .reduce((acc, curr) => {
+    const [key, value] = curr.split('=');
+    acc[key] = value;
+    return acc;
+  }, {});
 
   useEffect(() => {
-    // userPoints를 추출하는 로직을 작성합니다.
-    const accessToken = 'YOUR_ACCESS_TOKEN'; // 액세스 토큰을 적절히 설정합니다.
+    // user 객체의 변경을 감지하여 points 값을 업데이트
+    if (user.userInfo) {
+        setPoints(user.userInfo.points);
+    }
+}, [user]);
 
-    const fetchUserPoints = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/user/points', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
-          }
-        });
-        setUserPoints(response.data.points);
-      } catch (error) {
-        console.error('Error fetching user points:', error);
-      }
-    };
-
-    fetchUserPoints();
-  }, []);
-
-  const handlePayment = () => {
-    console.log('Pay button clicked.');
-
-    if (requiredPoints > 0) {
-      navigate('/payment', {
-        state: {
-          stadium_name,
-          stadium_location,
-          selectedDate,
-          selectedTime,
-          stadium_price,
-          userPoints,
-          stadium_price
-        }
-      });
-    } else {
-      navigate('/reservationComplete', {
-        state: {
-          stadium_img,
-          stadium_name,
-          stadium_location,
-          stadium_price,
-          stadium_info,
-          selectedDate,
-          selectedTime
-        }
-      });
+useEffect(() => {
+  const fetchStadiumInfo = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/stadiums/${id}`);
+      setStadium(response.data);
+    } catch (error) {
+      console.error('Error fetching stadium data:', error);
     }
   };
+
+  if (id) {
+    fetchStadiumInfo();
+  }
+}, [id]);
+
+if (!stadium) {
+  return (
+    <CenteredWrapper>
+      <p>Loading stadium information...</p>
+    </CenteredWrapper>
+  );
+}
+
+const { stadium_name, stadium_location, stadium_price, stadium_img } = stadium;
+const lackingPoints =  stadium_price - points;
+
+const handlePayment = () => {
+  console.log('Pay button clicked.');
+
+  if (lackingPoints > 0) {
+    navigate('/payment', {
+      state: {
+        stadium_name: stadium.stadium_name,
+        stadium_location: stadium.stadium_location,
+        selectedDate: date,
+        selectedTime: time,
+        stadium_price: stadium.stadium_price,
+        points: stadium.points
+      }
+    });
+  } else {
+    navigate('/reservationComplete', {
+      state: {
+        id: stadium.id,
+        stadium_img: stadium.stadium_img,
+        stadium_name: stadium.stadium_name,
+        stadium_location: stadium.stadium_location,
+        stadium_price: stadium.stadium_price,
+        stadium_info: stadium.stadium_info,
+        selectedDate: date,
+        selectedTime: time
+      }
+    });
+  }
+};
 
   return (
     <CenteredWrapper>
@@ -112,14 +133,13 @@ function CheckPage() {
         <Image src={stadium_img} alt="stadium image" />
         <h2>{stadium_name}</h2>
         <p>{stadium_location}</p>
-        <p>{selectedDate}</p>
-        <p>{selectedTime}</p>
-        <p>{stadium_price}</p>
+        <p>날짜: {selectedDate}</p>
+        <p>시간: {selectedTime}</p>
+        <p>가격: {stadium_price}</p>
         <br></br>
         <br></br>
-        <p>보유 포인트: {userPoints}원</p>
-        <p>필요 포인트: {requiredPoints > 0 ? requiredPoints : 0}원</p>
-        {requiredPoints > 0 ? (
+        <p>보유 포인트: {points}원</p>
+        {lackingPoints > 0 ? (
           <PayButton onClick={handlePayment}>충전하기</PayButton>
         ) : (
           <PayButton onClick={handlePayment}>결제하기</PayButton>
