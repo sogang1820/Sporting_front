@@ -8,7 +8,7 @@ import Signup from "./pages/signupPage";
 import Reservation from "./pages/reservationPage";
 import CheckReservation from "./pages/checkReservationPage";
 import Confirmation from "./pages/confirmationPage";
-import Payment from "./pages/paymentPage";
+import Payment from "./components/paymentContent/paymentPage";
 import ReservationComplete from "./pages/reservationCompletePage";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, logoutSuccess } from "./redux/actions/authActions";
@@ -22,7 +22,6 @@ const App = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
-    
     // useEffect(() => {
     //     const checkLoginStatus = async () => {
     //         try {
@@ -111,11 +110,7 @@ const App = () => {
                                     onLogout={handleLogout}
                                 />}
                         />
-                        <Route path="/payment" element={
-                            <Payment
-                                isLoggedIn={isLoggedIn}
-                                onLogout={handleLogout}
-                            />} />
+                        {/* <Route path="/payment" element={<PaymentContainer />} /> */}
                         <Route
                             path="/reservationComplete"
                             element={<ReservationComplete

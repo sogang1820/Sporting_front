@@ -26,7 +26,10 @@ const MyPageReservationPost = ({ reservation, index }) => {
                     <Stadium>
                         <Title>{stadium_name}</Title>
                         <Location>{stadium_location}</Location>
-                        <ReservationInfo>예약시간 | {reservation_time[0]}-{reservation_time[1]}</ReservationInfo>
+                        <ReservationInfo>
+                            예약시간 | {reservation_time[0]}-
+                            {reservation_time[1]}
+                        </ReservationInfo>
                     </Stadium>
                 </Box>
             </Wrapper>
@@ -60,6 +63,8 @@ const Box = styled.div`
     align-items: center;
     overflow: hidden;
     font-size: 1.5rem;
+    margin-left: 1.5rem;
+    z-index: -1;
 `;
 const RsvNum = styled.div``;
 const Title = styled.h2`
@@ -68,6 +73,7 @@ const Title = styled.h2`
 `;
 const ImgWrap = styled.div`
     margin-left: 1.5rem;
+
     width: 10.5rem;
     height: 7rem;
     position: relative;

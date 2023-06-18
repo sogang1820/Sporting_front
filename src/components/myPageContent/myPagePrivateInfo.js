@@ -2,17 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import PaymentModal from "../paymentContent/paymentModal";
 
 const MyPagePrivateInfo = ({ onLogin }) => {
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const user = useSelector((state) => state.auth.user);
     const username = user.userInfo ? user.userInfo.username : null;
     const phone_number = user.userInfo ? user.userInfo.phone_number : null;
     console.log("in my page: ", user);
     const points = user.userInfo ? user.userInfo.points : null;
 
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
     const navigateToMyPage = () => {
         navigate("/mypage");
+    };
+    const navigatePayment = () => {
+        navigate("/payment");
     };
 
     return (
@@ -36,7 +50,12 @@ const MyPagePrivateInfo = ({ onLogin }) => {
                     <PrivateInfoData>
                         <div>{points}pt</div>
                         <FixInfoWrapper>
-                            <PointLoad>포인트 충전</PointLoad>
+                            <PointLoad onClick={handleOpenModal}>
+                                포인트 충전
+                            </PointLoad>
+                            {isModalOpen && (
+                                <PaymentModal onClose={handleCloseModal} />
+                            )}
                             <PointWithDraw>포인트 인출</PointWithDraw>
                         </FixInfoWrapper>
                     </PrivateInfoData>
