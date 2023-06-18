@@ -98,7 +98,7 @@ if (!stadium) {
 const { stadium_name, stadium_location, stadium_price, stadium_img } = stadium;
 const lackingPoints =  stadium_price - points;
 
-const handlePayment = () => {
+const handlePayment = async () => {
   console.log('Pay button clicked.');
 
   if (lackingPoints > 0) {
@@ -113,18 +113,34 @@ const handlePayment = () => {
       }
     });
   } else {
-    navigate(`/reservationComplete?id=${id}`, {
-      state: {
-        id: id,
-        stadium_img: stadium.stadium_img,
-        stadium_name: stadium.stadium_name,
-        stadium_location: stadium.stadium_location,
-        stadium_price: stadium.stadium_price,
-        stadium_info: stadium.stadium_info,
-        selectedDate: date,
-        selectedTime: selectedTime
+    try {
+      const response = await axios.post('http://localhost:8000/payment', {
+        user_id: user.userInfo.user_id,
+        amount: stadium_price
+      });
+
+      if (response.data.status === 'success') {
+        // 포인트를 감소시킵니다
+        const newPoints = points - stadium_price;
+        setPoints(newPoints);
+        navigate(`/reservationComplete?id=${id}`, {
+          state: {
+            id: id,
+            stadium_img: stadium.stadium_img,
+            stadium_name: stadium.stadium_name,
+            stadium_location: stadium.stadium_location,
+            stadium_price: stadium.stadium_price,
+            stadium_info: stadium.stadium_info,
+            selectedDate: date,
+            selectedTime: selectedTime
+          }
+        });
+      } else {
+        console.error('Payment failed:', response.data.message);
       }
-    });
+    } catch (error) {
+      console.error('Error making payment:', error);
+    }
   }
 };
 

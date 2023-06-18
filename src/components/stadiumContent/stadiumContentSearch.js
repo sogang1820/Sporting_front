@@ -121,7 +121,7 @@ const StadiumContentSearch = () => {
 
         try {
             const response = await axios.get("http://localhost:8000/stadiums", {
-              params: params.toString()
+                params: params.toString(),
             });
 
             console.log("Response from the server: ", response.data);

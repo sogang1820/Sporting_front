@@ -83,7 +83,7 @@ const Complete = () => {
   }, [selectedTime]);
 
   const handleGoToMyPage = () => {
-    navigate('/mypage');
+    navigate('/');
   };
 
   const makeReservation = async () => {
@@ -126,7 +126,7 @@ const Complete = () => {
         <p>{stadium_location}</p>
         <p>날짜: {selectedDate}</p>
         <p>시간: {selectedTime}</p>
-        <MypageButton onClick={handleGoToMyPage}>마이페이지로 가기</MypageButton>
+        <MypageButton onClick={handleGoToMyPage}>메인페이지로 가기</MypageButton>
       </InfoBlock>
     </CenteredWrapper>
   );
