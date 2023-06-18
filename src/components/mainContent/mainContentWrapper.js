@@ -15,7 +15,7 @@ const circlesData = [
 ];
 
 const MainContentWrapper = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const handleCircleClick = async (value) => {
     const response = await axios.get('/stadiums', {
@@ -34,20 +34,23 @@ const MainContentWrapper = () => {
   };
   
 
-  return (
-    <Wrapper>
-      {circlesData.map((circle, index) => (
-        <Circle key={index} onClick={() => handleCircleClick(circle.value)}>
-          <CircleImage className={circle.label.toLowerCase()}>
-            <img src={circle.image} alt={circle.label} />
-          </CircleImage>
-          <Overlay>
-            <Label>{circle.label}</Label>
-          </Overlay>
-        </Circle>
-      ))}
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            {circlesData.map((circle, index) => (
+                <Circle
+                    key={index}
+                    onClick={() => handleCircleClick(circle.value)}
+                >
+                    <CircleImage className={circle.label.toLowerCase()}>
+                        <img src={circle.image} alt={circle.label} />
+                    </CircleImage>
+                    <Overlay>
+                        <Label>{circle.label}</Label>
+                    </Overlay>
+                </Circle>
+            ))}
+        </Wrapper>
+    );
 };
 
 export default MainContentWrapper;

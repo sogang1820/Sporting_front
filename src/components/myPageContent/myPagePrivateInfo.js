@@ -7,9 +7,10 @@ const MyPagePrivateInfo = ({ onLogin }) => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const username = user.userInfo ? user.userInfo.username : null;
-    // const username = user.userInfo ? user.userInfo.username : null;
     const phone_number = user.userInfo ? user.userInfo.phone_number : null;
-    console.log("in my page", user);
+    console.log("in my page: ", user);
+    const points = user.userInfo ? user.userInfo.points : null;
+
     const navigateToMyPage = () => {
         navigate("/mypage");
     };
@@ -33,7 +34,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
                 <FieldWrapper>
                     <PrivateInfoField>보유 포인트</PrivateInfoField>
                     <PrivateInfoData>
-                        <div>pt</div>
+                        <div>{points}pt</div>
                         <FixInfoWrapper>
                             <PointLoad>포인트 충전</PointLoad>
                             <PointWithDraw>포인트 인출</PointWithDraw>

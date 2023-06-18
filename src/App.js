@@ -22,7 +22,7 @@ const App = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
-
+    
     // useEffect(() => {
     //     const checkLoginStatus = async () => {
     //         try {
