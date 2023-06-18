@@ -77,14 +77,21 @@ const StadiumContentList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const queryParams = new URLSearchParams(location.search);
   const sportsCategory = queryParams.get('sports_category');
+  const stadiumLocation = queryParams.get('stadium_location');
+  const reservation = queryParams.get('reservation');
+  const stadiumName = queryParams.get('stadium_name');
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/stadiums');
-      const receivedArray = response.data;
-      console.log('receive:', receivedArray);
-
-      const formattedData = receivedArray.map((stadium) => ({
+      const response = await axios.get('http://localhost:8000/stadiums', {
+        params: {
+          sports_category: sportsCategory,
+        },
+      });
+  
+      const formattedData = response.data.filter((stadium) =>
+        stadium.stadium_location.startsWith(stadiumLocation.slice(0, 2))
+      ).map((stadium) => ({
         stadium_name: stadium.stadium_name,
         stadium_location: stadium.stadium_location,
         sports_category: stadium.sports_category,
@@ -93,9 +100,11 @@ const StadiumContentList = () => {
         stadium_info: stadium.stadium_info,
       }));
 
-      console.log(formattedData);
+      const filteredByName = formattedData.filter((stadium) =>
+      stadium.stadium_name.toLowerCase().includes(stadiumName.toLowerCase())
+    );
 
-      setFilteredData(formattedData.filter((stadium) => stadium.sports_category === sportsCategory));
+    setFilteredData(filteredByName);
     } catch (error) {
       console.error('Error fetching stadium data:', error);
     }
@@ -103,7 +112,7 @@ const StadiumContentList = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [sportsCategory, stadiumLocation, reservation, stadiumName]);
 
   console.log('filteredData:', filteredData);
 

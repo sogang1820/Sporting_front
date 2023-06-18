@@ -106,10 +106,12 @@ const StadiumContentSearch = () => {
   const handleSearch = async () => {
     const query = {
       sports_category,
-      stadium_location,
+      stadium_location: stadium_location === "ALL" ? "" : stadium_location.slice(0, 2),
       stadium_name,
       reservation,
     };
+
+    navigate(`/stadiums?${queryString.stringify(query)}`);
   
     console.log("Query sent to the server: ", query);
   
@@ -120,8 +122,6 @@ const StadiumContentSearch = () => {
   
       console.log("Response from the server: ", response.data);
 
-      const navigate = useNavigate();
-    navigate('/stadiums');
     } catch (error) {
       console.error('Error fetching stadium data:', error);
     }
