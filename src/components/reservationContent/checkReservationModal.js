@@ -19,24 +19,29 @@ const ModalContent = styled.div`
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+    max-height: 80%;
+    overflow-y: auto;
+    & > button {
+        z-index: 100;
+    }
 `;
 
 const CheckReservationModal = ({ onClose }) => {
     const navigate = useNavigate();
     const navigateToMyPage = () => {
-        navigate("/mypage");
+        navigate("/");
     };
     const handleButtonClick = () => {
         onClose(); // onClose 함수 호출
-        navigateToMyPage(); // navigateToMyPage 함수 호출
+        // navigateToMyPage(); // navigateToMyPage 함수 호출
 
         console.log("i'm done");
     };
     return (
         <ModalWrapper>
             <ModalContent>
-                <CheckReservationPage />
                 <button onClick={handleButtonClick}>Close</button>
+                <CheckReservationPage />
             </ModalContent>
         </ModalWrapper>
     );

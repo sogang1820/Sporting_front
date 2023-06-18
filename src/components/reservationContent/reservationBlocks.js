@@ -92,21 +92,21 @@ function ReservationPage() {
     setIsModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  useEffect(() => {
-    const fetchOperatingHours = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/stadiums/${id}`
-        );
-        const { operating_hours } = response.data;
-        setOperatingHours(operating_hours);
-      } catch (error) {
-        console.error("Error fetching operating hours:", error);
-      }
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
     };
+    useEffect(() => {
+        const fetchOperatingHours = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8000/stadiums/${id}`
+                );
+                const { operating_hours } = response.data;
+                setOperatingHours(operating_hours);
+            } catch (error) {
+                console.error("Error fetching operating hours:", error);
+            }
+        };
 
     fetchOperatingHours();
   }, [id]);

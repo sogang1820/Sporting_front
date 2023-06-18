@@ -50,7 +50,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
                 <FieldWrapper>
                     <PrivateInfoField>보유 포인트</PrivateInfoField>
                     <PrivateInfoData>
-                        <div>{points !== null ? `${points}pt` : "-"}pt</div>
+                        <div>{points !== null ? `${points}pt` : "-"}</div>
                         <FixInfoWrapper>
                             <PointLoad onClick={handleOpenModal}>
                                 포인트 충전

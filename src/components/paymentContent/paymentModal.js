@@ -19,6 +19,9 @@ const ModalContent = styled.div`
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+    & > button{
+        
+    }
 `;
 
 const PaymentModal = ({ onClose }) => {
