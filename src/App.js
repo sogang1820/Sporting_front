@@ -1,4 +1,5 @@
 import { Provider } from "react-redux";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Main from "./pages/mainPage";
 import Login from "./pages/loginPage";
@@ -21,6 +22,7 @@ const App = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const dispatch = useDispatch();
 
+    
     // useEffect(() => {
     //     const checkLoginStatus = async () => {
     //         try {
@@ -79,16 +81,29 @@ const App = () => {
                             element={<Login onLogin={handleLogin} />}
                         />
                         <Route path="/signup" element={<Signup />} />
-<<<<<<< HEAD
-                        <Route path="/board" element={<Board />} />
-=======
-                        <Route path="/stadiums" element={<Board />} />
+                        <Route
+                            path="/stadiums"
+                            element={
+                                <Board
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />
+                            }
+                        />
                         <Route path="/reservation" element={<Reservation />} />
-                        <Route path="/checkReservation" element={<CheckReservation />} />
-                        <Route path="/confirmation" element={<Confirmation />} />
+                        <Route
+                            path="/checkReservation"
+                            element={<CheckReservation />}
+                        />
+                        <Route
+                            path="/confirmation"
+                            element={<Confirmation />}
+                        />
                         <Route path="/payment" element={<Payment />} />
-                        <Route path="/reservationComplete" element={<ReservationComplete />} />
->>>>>>> feature/reservation
+                        <Route
+                            path="/reservationComplete"
+                            element={<ReservationComplete />}
+                        />
                         <Route
                             path="/mypage"
                             element={
@@ -98,10 +113,6 @@ const App = () => {
                                 />
                             }
                         />
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/reservation
                         {/* 추가적인 페이지 라우트를 설정 */}
                     </Routes>
                 </div>
