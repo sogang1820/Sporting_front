@@ -103,14 +103,28 @@ const StadiumContentSearch = () => {
     setStadiumName(e.target.value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     const query = {
       sports_category,
       stadium_location,
       stadium_name,
       reservation,
     };
-    navigate('/stadiums?' + queryString.stringify(query));
+  
+    console.log("Query sent to the server: ", query);
+  
+    try {
+      const response = await axios.get('http://localhost:8000/stadiums', {
+        params: query
+      });
+  
+      console.log("Response from the server: ", response.data);
+
+      const navigate = useNavigate();
+    navigate('/stadiums');
+    } catch (error) {
+      console.error('Error fetching stadium data:', error);
+    }
   };
 
   return (

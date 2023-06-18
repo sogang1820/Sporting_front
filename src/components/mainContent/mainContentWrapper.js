@@ -4,6 +4,7 @@ import Baseball from "../../assets/img/baseball.jpg";
 import Basketball from "../../assets/img/basketball.jpg";
 import Futsal from "../../assets/img/futsal.jpg";
 import styled from "styled-components";
+import axios from "axios";
 
 const circlesData = [
   { image: Baseball, value: "baseball", label: "야구" },
@@ -14,9 +15,22 @@ const circlesData = [
 const MainContentWrapper = () => {
   const navigate = useNavigate();
 
-  const handleCircleClick = (value) => {
+  const handleCircleClick = async (value) => {
+    const response = await axios.get('/stadiums', {
+      params: {
+        sports_category: value
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  
     navigate(`/stadiums?sports_category=${value}`);
   };
+  
 
   return (
     <Wrapper>

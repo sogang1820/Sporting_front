@@ -9,7 +9,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
     const username = user.userInfo ? user.userInfo.username : null;
     // const username = user.userInfo ? user.userInfo.username : null;
     const phone_number = user.userInfo ? user.userInfo.phone_number : null;
-    console.log(username);
+    console.log("in my page", user);
     const navigateToMyPage = () => {
         navigate("/mypage");
     };
