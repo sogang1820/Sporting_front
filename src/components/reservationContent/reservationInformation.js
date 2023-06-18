@@ -35,55 +35,46 @@ const Content = styled.div`
   line-height: 0.1;
 `;
 
-function InformationPage() {
-  return (
-    <InfoBlock>
-      <Content>
-        <h2>name</h2>
-      </Content>
-    </InfoBlock>
-  );
-}
-
-export default InformationPage;
-/* 
-function ReservationInformation() {
+const InformationPage = () => {
   const location = useLocation();
   const [stadiumInfo, setStadiumInfo] = useState(null);
   const queryParams = new URLSearchParams(location.search);
   const stadiumId = queryParams.get('id');
+  console.log(stadiumId);
 
   useEffect(() => {
     const fetchStadiumInfo = async () => {
       try {
         const response = await axios.get(`http://localhost:8000/stadiums/${stadiumId}`);
         setStadiumInfo(response.data);
+        console.log(response);
       } catch (error) {
         console.error('Error fetching stadium data:', error);
       }
     };
 
-    fetchStadiumInfo();
+    if (stadiumId) {
+      fetchStadiumInfo();
+    }
   }, [stadiumId]);
 
   if (!stadiumInfo) {
-    return null;
+    return <div>Loading...</div>;
   }
 
-  const { _id, stadium_name, stadium_location, stadium_price, stadium_info } = stadiumInfo;
+  const { stadium_name, stadium_location, stadium_price, stadium_info, stadium_img } = stadiumInfo;
 
   return (
-    <div>
-      <InformationPage
-        name={stadiumInfo.stadium_name}
-        address={stadiumInfo.stadium_location}
-        price={stadiumInfo.stadium_price}
-        info={stadiumInfo.stadium_info}
-        image={stadiumInfo.stadium_img}
-      />
-    </div>
+    <InfoBlock>
+      <Image src={stadium_img} alt="stadium image" />
+      <Content>
+        <h2>{stadium_name}</h2>
+        <p>{stadium_location}</p>
+        <p>{stadium_price}</p>
+        <p>{stadium_info}</p>
+      </Content>
+    </InfoBlock>
   );
-}
+};
 
-export default ReservationInformation;
- */
+export default InformationPage;

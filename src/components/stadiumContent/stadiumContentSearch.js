@@ -159,6 +159,14 @@ const StadiumContentSearch = () => {
           onChange={handleClickRadioButton1}
         />
         <label> 풋살 </label>
+        &nbsp;&nbsp;
+        <input
+          type="radio"
+          value="tennis"
+          checked={sports_category === "tennis"}
+          onChange={handleClickRadioButton1}
+        />
+        <label> 테니스 </label>
 
         <br /><br />
         <SelectWrapper>

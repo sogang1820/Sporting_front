@@ -90,7 +90,11 @@ const App = () => {
                                 />
                             }
                         />
-                        <Route path="/reservation" element={<Reservation />} />
+                        <Route path="/reservations" element={
+                            <Reservation
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />} />
                         <Route
                             path="/checkReservation"
                             element={<CheckReservation />}

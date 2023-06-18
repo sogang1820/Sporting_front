@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Paginate from 'react-paginate';
 import axios from 'axios';
 
-const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, stadium_info }) => {
+const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, stadium_info, _id, operating_hours }) => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('');
@@ -18,8 +18,8 @@ const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, s
   };
 
   const handleStadiumClick = () => {
-    navigate(`/stadium-detail?name=${encodeURIComponent(stadium_name)}`);
-  };
+    navigate(`/reservations?id=${_id}`);
+  };  
 
   const handleTimeSelect = (time) => {
     setSelectedTime(time);
@@ -32,6 +32,7 @@ const Stadium = ({ stadium_name, stadium_location, stadium_img, stadium_price, s
           stadium_img: stadium_img,
           stadium_price: stadium_price,
           stadium_info: stadium_info,
+          operating_hours: operating_hours, // add operating hours
         },
       }
     );
@@ -78,30 +79,33 @@ const StadiumContentList = () => {
       const response = await axios.get('http://localhost:8000/stadiums', {
         params: {
           sports_category: sportsCategory,
+          stadium_location: stadiumLocation.slice(0, 2),
         },
       });
-
-      const today = new Date().toISOString().split('T')[0]; // Get today's date
-
+  
+      const today = new Date();
+      const todayFormatted = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+  
       const formattedData = response.data
-        .filter((stadium) => stadium.stadium_location.startsWith(stadiumLocation.slice(0, 2)))
-        .map((stadium, index) => ({
-          _id: index + 1,
+        .filter(stadium => new Date(stadium.date).toISOString().split('T')[0] === todayFormatted)
+        .map((stadium) => ({
+          _id: stadium._id,
           stadium_name: stadium.stadium_name,
           stadium_location: stadium.stadium_location,
           sports_category: stadium.sports_category,
           stadium_img: stadium.stadium_img,
           stadium_price: stadium.stadium_price,
           stadium_info: stadium.stadium_info,
+          operating_hours: stadium.operating_hours,
           date: new Date(stadium.date).toISOString().split('T')[0], // 날짜 형식을 "yyyy-mm-dd"로 변환
-        }))
-        .filter((stadium) => stadium.date === today);
-
+        }));
+  
       setFilteredData(formattedData);
     } catch (error) {
       console.error('Error fetching stadium data:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchData();
@@ -128,7 +132,8 @@ const StadiumContentList = () => {
         stadium_img={stadium.stadium_img}
         stadium_price={stadium.stadium_price}
         stadium_info={stadium.stadium_info}
-        date={stadium.date}
+        operating_hours={stadium.operating_hours}
+        _id={stadium._id}
       />
     ));
 
@@ -139,7 +144,7 @@ const StadiumContentList = () => {
       {currentPageData.length > 0 ? (
         currentPageData
       ) : (
-        <p></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No stadiums available.</p>
       )}
       <Pagination
         previousLabel={'← Previous'}

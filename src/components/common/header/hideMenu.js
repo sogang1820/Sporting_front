@@ -42,6 +42,11 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
         toggleMenu();
     };
 
+    const navigateToTennisPage = () => {
+        navigate("/stadiums?sports_category=tennis");
+        toggleMenu();
+    };
+
     return (
         <>
             <HideMenuWrap>
@@ -56,6 +61,7 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
                         농구
                     </BasketBall>
                     <Futsal onClick={navigateToFutsalPage}>풋살</Futsal>
+                    <Tennis onClick={navigateToTennisPage}>테니스</Tennis>
                     <MenuBottom>
                         {isLoggedIn ? (
                             <>
@@ -144,6 +150,15 @@ const Futsal = styled.div`
     font-weight: 600;
     color: #505050;
     cursor: pointer;
+`;
+
+const Tennis = styled.div`
+    margin: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #505050;
 `;
 
 const MenuBottom = styled.div`

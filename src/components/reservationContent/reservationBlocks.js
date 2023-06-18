@@ -19,14 +19,6 @@ align-items: center;
 font-size: 16px;
 `;
 
-const DateBlock = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 10px;
-  text-align: center;
-  font-family: 'GmarketMedium', sans-serif;
-`;
-
 const TimeBlock = styled.div`
   background: #FFFFFF;
   padding: 5px;
@@ -40,6 +32,8 @@ const TimeBlock = styled.div`
   white-space: nowrap;
   font-family: 'GmarketLight', sans-serif;
   font-size: 15px;
+  width: 80%;
+  height: 25px;
 
   &:hover {
     background-color: #ddd;
@@ -86,22 +80,16 @@ const CalendarWrapper = styled.div`
 function ReservationPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const { name, address, price, info, image } = location.state || {};
 
-  const dates = [];
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(selectedDate);
-    date.setDate(date.getDate() + i);
-    dates.push(date);
-  }
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleBlockClick = (date, time) => {
-    const formattedDate = date.toISOString().split('T')[0];
+  const handleBlockClick = (time) => {
+    const formattedDate = selectedDate.toISOString().split('T')[0];
     const formattedTime = `Time ${time}`;
 
     navigate(`/checkReservation?date=${formattedDate}&time=${encodeURIComponent(formattedTime)}`, {
@@ -119,23 +107,13 @@ function ReservationPage() {
           dateFormat="yyyy-MM-dd"
         />
       </CalendarWrapper>
-      {dates.map((date, index) => (
-        <DateBlock
-          key={index}
-          active={date.toISOString().split('T')[0] === selectedDate.toISOString().split('T')[0]}
-          onClick={() => setSelectedDate(date)}
+      {[...Array(8)].map((_, i) => (
+        <TimeBlock
+          key={i}
+          onClick={() => handleBlockClick(i + 1)}
         >
-          <div>{date.toLocaleDateString()}</div>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          {[...Array(8)].map((_, i) => (
-            <TimeBlock
-              key={i}
-              onClick={() => handleBlockClick(date, i + 1)}
-            >
-              Time {i + 1}
-            </TimeBlock>
-          ))}
-        </DateBlock>
+          Time {i + 1}
+        </TimeBlock>
       ))}
     </PageWrapper>
   );

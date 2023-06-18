@@ -7,6 +7,7 @@ const ReservationPage = ({ isLoggedIn, onLogout }) => {
   return (
     <div>
       <Header isLoggedIn={isLoggedIn} onLogout={onLogout} />
+      <ReservationContentWrapper />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Baseball from "../../assets/img/baseball.jpg";
 import Basketball from "../../assets/img/basketball.jpg";
 import Futsal from "../../assets/img/futsal.jpg";
+import Tennis from "../../assets/img/tennis.jpg"
 import styled from "styled-components";
 import axios from "axios";
 
@@ -10,6 +11,7 @@ const circlesData = [
   { image: Baseball, value: "baseball", label: "야구" },
   { image: Basketball, value: "basketball", label: "농구" },
   { image: Futsal, value: "futsal", label: "풋살" },
+  { image: Tennis, value: "tennis", label: "테니스" },
 ];
 
 const MainContentWrapper = () => {
