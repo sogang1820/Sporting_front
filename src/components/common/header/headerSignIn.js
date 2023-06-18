@@ -1,10 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const HeaderSignIn = () => {
+    const navigate = useNavigate();
+
+    const handleLogInClick = () => {
+        navigate("/login");
+    };
+
     return (
         <>
-            <HeaderSignInIcon>로그인</HeaderSignInIcon>
+            <HeaderSignInIcon onClick={handleLogInClick}>
+                로그인
+            </HeaderSignInIcon>
         </>
     );
 };

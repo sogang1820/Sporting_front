@@ -7,7 +7,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
     return (
         <>
             <HeaderWrap>
-                <TopLeftHeader />
+                <TopLeftHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
                 <TopRightHeader isLoggedIn={isLoggedIn} onLogout={onLogout} />
             </HeaderWrap>
         </>
@@ -23,4 +23,5 @@ const HeaderWrap = styled.div`
     padding: 10px;
     background-color: #ffffff;
     height: 60px; /* 원하는 높이로 수정하세요 */
+    text-align: center;
 `;

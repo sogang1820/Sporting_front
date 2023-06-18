@@ -1,10 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const HeaderSignUp = () => {
+    const navigate = useNavigate();
+
+    const handleSignUpClick = () => {
+        navigate("/signup");
+    };
+
     return (
         <>
-            <HeaderSignUpIcon>회원가입</HeaderSignUpIcon>
+            <HeaderSignUpIcon onClick={handleSignUpClick}>회원가입</HeaderSignUpIcon>
         </>
     );
 };

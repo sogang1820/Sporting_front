@@ -1,39 +1,53 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { loginSuccess, fetchUserInfo } from "../../redux/actions/authActions";
+const loginUrl = process.env.REACT_APP_LOGIN_URL;
 
-const LoginContentInner = ({ onLogin }) => {
-    const [username, setUsername] = useState("");
+const LoginContentInner = () => {
+    const [user_id, setUser_id] = useState("");
     const [password, setPassword] = useState("");
-    const [accessToken, setAccessToken] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleClickSignup = () => {
+        navigate("/signup");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            console.log("Submitting login form");
-            const response = await fetch("http://localhost:8000/login", {
+            const response = await fetch(loginUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ user_id: username, password: password }),
+                body: JSON.stringify({
+                    user_id: user_id,
+                    password: password,
+                }),
             });
-            console.log(JSON.stringify({ username, password }));
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
-                setAccessToken(data.access_token);
+                const { access_token } = data;
+                dispatch(
+                    loginSuccess({
+                        accessToken: access_token,
+                        user_id: user_id,
+                    })
+                );
+                dispatch(fetchUserInfo(access_token, user_id));
+                console.log("goto fetchUserInfo", user_id, access_token);
+
                 navigate("/");
             } else {
-                // 로그인 실패 처리
-                console.error("로그인 실패");
+                throw new Error("로그인 요청 실패");
             }
         } catch (error) {
             console.error("로그인 요청 에러:", error);
-            // 에러 처리
         }
     };
 
@@ -43,8 +57,8 @@ const LoginContentInner = ({ onLogin }) => {
                 <Input
                     type="text"
                     placeholder="아이디"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={user_id}
+                    onChange={(e) => setUser_id(e.target.value)}
                 />
                 <Input
                     type="password"
@@ -53,7 +67,7 @@ const LoginContentInner = ({ onLogin }) => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button type="submit">로그인</Button>
-                <ToSignUp>회원가입</ToSignUp>
+                <ToSignUp onClick={handleClickSignup}>회원가입</ToSignUp>
             </LoginForm>
         </Container>
     );
@@ -104,6 +118,7 @@ const Button = styled.button`
     font-weight: 700;
     font-size: 1rem;
 `;
+
 const ToSignUp = styled.div`
     cursor: pointer;
     margin-top: 0.5rem;
