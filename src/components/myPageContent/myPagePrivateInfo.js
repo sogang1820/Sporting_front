@@ -7,13 +7,15 @@ import PaymentModal from "../paymentContent/paymentModal";
 const MyPagePrivateInfo = ({ onLogin }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [points, setPoints] = useState(null); // 초기값은 null로 설정
     const user = useSelector((state) => state.auth.user);
     const username = user.userInfo ? user.userInfo.username : null;
     const phone_number = user.userInfo ? user.userInfo.phone_number : null;
     console.log("in my page: ", user);
-    const points = user.userInfo ? user.userInfo.points : null;
 
+    const navigateToMyPage = () => {
+        navigate("/mypage");
+    };
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
@@ -21,13 +23,13 @@ const MyPagePrivateInfo = ({ onLogin }) => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
-    const navigateToMyPage = () => {
-        navigate("/mypage");
-    };
-    const navigatePayment = () => {
-        navigate("/payment");
-    };
+    useEffect(() => {
+        // user 객체의 변경을 감지하여 points 값을 업데이트
+        if (user.userInfo) {
+            setPoints(user.userInfo.points);
+            console.log("hello, points are changed")
+        }
+    }, [user]);
 
     return (
         <PrivateInfoWrapper>
@@ -48,7 +50,7 @@ const MyPagePrivateInfo = ({ onLogin }) => {
                 <FieldWrapper>
                     <PrivateInfoField>보유 포인트</PrivateInfoField>
                     <PrivateInfoData>
-                        <div>{points}pt</div>
+                        <div>{points !== null ? `${points}pt` : "-"}pt</div>
                         <FixInfoWrapper>
                             <PointLoad onClick={handleOpenModal}>
                                 포인트 충전

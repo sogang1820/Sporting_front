@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import PaymentPage from "./paymentPage";
 
 const ModalWrapper = styled.div`
@@ -21,11 +22,21 @@ const ModalContent = styled.div`
 `;
 
 const PaymentModal = ({ onClose }) => {
+    const navigate = useNavigate();
+    const navigateToMyPage = () => {
+        navigate("/mypage");
+    };
+    const handleButtonClick = () => {
+        navigateToMyPage(); // navigateToMyPage 함수 호출
+        onClose(); // onClose 함수 호출
+
+        console.log("i'm done");
+    };
     return (
         <ModalWrapper>
             <ModalContent>
                 <PaymentPage />
-                <button onClick={onClose}>Close</button>
+                <button onClick={handleButtonClick}>Close</button>
             </ModalContent>
         </ModalWrapper>
     );
