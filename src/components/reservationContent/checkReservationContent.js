@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import styled from 'styled-components';
-import axios from 'axios';
+import styled from "styled-components";
+import axios from "axios";
 
 const InfoBlock = styled.div`
     width: 60%;
-    height: auto;
+    height: 80vh;
     background: #f8f6f4;
     border-top: 1px solid #000000;
     border-bottom: 1px solid #000000;
@@ -31,6 +31,7 @@ const CenteredWrapper = styled.div`
 `;
 
 const Image = styled.img`
+    margin-top: 10rem;
     width: 240px;
     object-fit: cover;
 `;
@@ -50,103 +51,107 @@ const PayButton = styled.button`
 `;
 
 function CheckPage({ onLogin }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { selectedDate, selectedTime } = location.state || {};
-  const [stadium, setStadium] = useState(null);
-  const user = useSelector((state) => state.auth.user);
-  const [points, setPoints] = useState(null); // 초기값은 null로 설정
-  const { id, date, time } = location.search.slice(1)
-  .split('&')
-  .reduce((acc, curr) => {
-    const [key, value] = curr.split('=');
-    acc[key] = value;
-    return acc;
-  }, {});
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { selectedDate, selectedTime } = location.state || {};
+    const [stadium, setStadium] = useState(null);
+    const user = useSelector((state) => state.auth.user);
+    const [points, setPoints] = useState(null); // 초기값은 null로 설정
+    const { id, date, time } = location.search
+        .slice(1)
+        .split("&")
+        .reduce((acc, curr) => {
+            const [key, value] = curr.split("=");
+            acc[key] = value;
+            return acc;
+        }, {});
 
-  useEffect(() => {
-    // user 객체의 변경을 감지하여 points 값을 업데이트
-    if (user.userInfo) {
-        setPoints(user.userInfo.points);
+    useEffect(() => {
+        // user 객체의 변경을 감지하여 points 값을 업데이트
+        if (user.userInfo) {
+            setPoints(user.userInfo.points);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        const fetchStadiumInfo = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8000/stadiums/${id}`
+                );
+                setStadium(response.data);
+            } catch (error) {
+                console.error("Error fetching stadium data:", error);
+            }
+        };
+
+        if (id) {
+            fetchStadiumInfo();
+        }
+    }, [id]);
+
+    if (!stadium) {
+        return (
+            <CenteredWrapper>
+                <p>Loading stadium information...</p>
+            </CenteredWrapper>
+        );
     }
-}, [user]);
 
-useEffect(() => {
-  const fetchStadiumInfo = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8000/stadiums/${id}`);
-      setStadium(response.data);
-    } catch (error) {
-      console.error('Error fetching stadium data:', error);
-    }
-  };
+    const { stadium_name, stadium_location, stadium_price, stadium_img } =
+        stadium;
+    const lackingPoints = stadium_price - points;
 
-  if (id) {
-    fetchStadiumInfo();
-  }
-}, [id]);
+    const handlePayment = () => {
+        console.log("Pay button clicked.");
 
-if (!stadium) {
-  return (
-    <CenteredWrapper>
-      <p>Loading stadium information...</p>
-    </CenteredWrapper>
-  );
-}
+        if (lackingPoints > 0) {
+            navigate("/payment", {
+                state: {
+                    stadium_name: stadium.stadium_name,
+                    stadium_location: stadium.stadium_location,
+                    selectedDate: date,
+                    selectedTime: time,
+                    stadium_price: stadium.stadium_price,
+                    points: stadium.points,
+                },
+            });
+        } else {
+            navigate("/reservationComplete", {
+                state: {
+                    id: stadium.id,
+                    stadium_img: stadium.stadium_img,
+                    stadium_name: stadium.stadium_name,
+                    stadium_location: stadium.stadium_location,
+                    stadium_price: stadium.stadium_price,
+                    stadium_info: stadium.stadium_info,
+                    selectedDate: date,
+                    selectedTime: time,
+                },
+            });
+        }
+    };
 
-const { stadium_name, stadium_location, stadium_price, stadium_img } = stadium;
-const lackingPoints =  stadium_price - points;
-
-const handlePayment = () => {
-  console.log('Pay button clicked.');
-
-  if (lackingPoints > 0) {
-    navigate('/payment', {
-      state: {
-        stadium_name: stadium.stadium_name,
-        stadium_location: stadium.stadium_location,
-        selectedDate: date,
-        selectedTime: time,
-        stadium_price: stadium.stadium_price,
-        points: stadium.points
-      }
-    });
-  } else {
-    navigate('/reservationComplete', {
-      state: {
-        id: stadium.id,
-        stadium_img: stadium.stadium_img,
-        stadium_name: stadium.stadium_name,
-        stadium_location: stadium.stadium_location,
-        stadium_price: stadium.stadium_price,
-        stadium_info: stadium.stadium_info,
-        selectedDate: date,
-        selectedTime: time
-      }
-    });
-  }
-};
-
-  return (
-    <CenteredWrapper>
-      <InfoBlock>
-        <Image src={stadium_img} alt="stadium image" />
-        <h2>{stadium_name}</h2>
-        <p>{stadium_location}</p>
-        <p>날짜: {selectedDate}</p>
-        <p>시간: {selectedTime}</p>
-        <p>가격: {stadium_price}</p>
-        <br></br>
-        <br></br>
-        <p>보유 포인트: {points}원</p>
-        {lackingPoints > 0 ? (
-          <PayButton onClick={handlePayment}>충전하기</PayButton>
-        ) : (
-          <PayButton onClick={handlePayment}>결제하기</PayButton>
-        )}
-      </InfoBlock>
-    </CenteredWrapper>
-  );
+    return (
+        <CenteredWrapper>
+            <InfoBlock>
+                <Image src={stadium_img} alt="stadium image" />
+                <h2>{stadium_name}</h2>
+                <p>{stadium_location}</p>
+                <p>날짜: {selectedDate}</p>
+                <p>시간: {selectedTime}</p>
+                <p>가격: {stadium_price}</p>
+                <br></br>
+                <br></br>
+                <p>보유 포인트: {points}원</p>
+                {lackingPoints > 0 ? (
+                    <PayButton onClick={handlePayment}>충전하기</PayButton>
+                ) : (
+                    <PayButton onClick={handlePayment}>결제하기</PayButton>
+                )}
+            </InfoBlock>
+        </CenteredWrapper>
+    );
 }
 
 export default CheckPage;

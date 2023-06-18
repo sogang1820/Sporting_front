@@ -21,6 +21,9 @@ const ModalContent = styled.div`
     border-radius: 8px;
     max-height: 80%;
     overflow-y: auto;
+    & > button {
+        z-index: 100;
+    }
 `;
 
 const CheckReservationModal = ({ onClose }) => {
@@ -37,8 +40,8 @@ const CheckReservationModal = ({ onClose }) => {
     return (
         <ModalWrapper>
             <ModalContent>
-                <CheckReservationPage />
                 <button onClick={handleButtonClick}>Close</button>
+                <CheckReservationPage />
             </ModalContent>
         </ModalWrapper>
     );
