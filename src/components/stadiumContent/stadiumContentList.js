@@ -104,7 +104,11 @@ const StadiumContentList = () => {
       stadium.stadium_name.toLowerCase().includes(stadiumName.toLowerCase())
     );
 
-    setFilteredData(filteredByName);
+    const filteredByCategory = filteredByName.filter(
+      (stadium) => stadium.sports_category === sportsCategory
+    );
+
+    setFilteredData(filteredByCategory);    
     } catch (error) {
       console.error('Error fetching stadium data:', error);
     }
@@ -145,7 +149,7 @@ const StadiumContentList = () => {
       {currentPageData.length > 0 ? (
         currentPageData
       ) : (
-        <p>No stadiums found.</p>
+        <p></p>
       )}
       <Pagination
         previousLabel={'← Previous'}

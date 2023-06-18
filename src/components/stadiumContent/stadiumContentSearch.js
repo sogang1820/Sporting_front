@@ -127,6 +127,10 @@ const StadiumContentSearch = () => {
     }
   };
 
+  useEffect(() => {
+    handleSearch();
+  }, [sports_category]);
+
   return (
     <SearchBlock>
       <div>
