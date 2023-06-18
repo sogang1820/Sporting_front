@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const InfoBlock = styled.div`
   width: 50%;
@@ -50,11 +51,30 @@ const PayButton = styled.button`
 function CheckPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { name, address, price, image, selectedDate, selectedTime } = location.state || {};
+  const { stadium_name, stadium_location, stadium_price, stadium_img, stadium_info, selectedDate, selectedTime } = location.state || {};
 
-  const [userPoints, setUserPoints] = useState();
-  const currentPoints = userPoints;
-  const requiredPoints = price - userPoints;
+  const [userPoints, setUserPoints] = useState(null);
+  const requiredPoints = stadium_price;
+
+  useEffect(() => {
+    // userPoints를 추출하는 로직을 작성합니다.
+    const accessToken = 'YOUR_ACCESS_TOKEN'; // 액세스 토큰을 적절히 설정합니다.
+
+    const fetchUserPoints = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/user/points', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        setUserPoints(response.data.points);
+      } catch (error) {
+        console.error('Error fetching user points:', error);
+      }
+    };
+
+    fetchUserPoints();
+  }, []);
 
   const handlePayment = () => {
     console.log('Pay button clicked.');
@@ -62,22 +82,23 @@ function CheckPage() {
     if (requiredPoints > 0) {
       navigate('/payment', {
         state: {
-          name,
-          address,
+          stadium_name,
+          stadium_location,
           selectedDate,
           selectedTime,
-          price,
-          currentPoints,
-          requiredPoints
+          stadium_price,
+          userPoints,
+          stadium_price
         }
       });
     } else {
       navigate('/reservationComplete', {
         state: {
-          image,
-          name,
-          address,
-          price,
+          stadium_img,
+          stadium_name,
+          stadium_location,
+          stadium_price,
+          stadium_info,
           selectedDate,
           selectedTime
         }
@@ -88,16 +109,16 @@ function CheckPage() {
   return (
     <CenteredWrapper>
       <InfoBlock>
-        <Image src={image} alt="stadium image" />
-        <h2>{name}</h2>
-        <p>{address}</p>
+        <Image src={stadium_img} alt="stadium image" />
+        <h2>{stadium_name}</h2>
+        <p>{stadium_location}</p>
         <p>{selectedDate}</p>
         <p>{selectedTime}</p>
-        <p>{price}</p>
+        <p>{stadium_price}</p>
         <br></br>
         <br></br>
         <p>보유 포인트: {userPoints}원</p>
-        <p>부족 포인트: {requiredPoints > 0 ? requiredPoints : 0}원</p>
+        <p>필요 포인트: {requiredPoints > 0 ? requiredPoints : 0}원</p>
         {requiredPoints > 0 ? (
           <PayButton onClick={handlePayment}>충전하기</PayButton>
         ) : (
