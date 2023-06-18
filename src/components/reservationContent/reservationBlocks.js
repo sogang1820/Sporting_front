@@ -82,7 +82,7 @@ const CalendarWrapper = styled.div`
 function ReservationPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = location.state || {};
+  const { id, name, address, price, info, image } = location.state || {};
   const [operatingHours, setOperatingHours] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -100,23 +100,24 @@ function ReservationPage() {
     fetchOperatingHours();
   }, [id]);
 
-  useEffect(() => {
-    console.log('Operating Hours:', operatingHours);
-  }, [operatingHours]);
-
-  const numTimeBlocks = operatingHours.length;
-  const { name, address, price, info, image } = location.state || {};
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   const handleBlockClick = (time) => {
     const formattedDate = selectedDate.toISOString().split('T')[0];
-    const formattedTime = `Time ${time}`;
-
-    navigate(`/checkReservation?date=${formattedDate}&time=${encodeURIComponent(formattedTime)}`, {
-      state: { name, address, price, info, image },
+    const formattedTime = `${time[0].start} - ${time[1].end}`;
+  
+    navigate(`/checkReservation?date=${encodeURIComponent(selectedDate.toISOString().split('T')[0])}&time=${encodeURIComponent(formattedTime)}`, {
+      state: {
+        name,
+        address,
+        price,
+        info,
+        image,
+        selectedDate: formattedDate,
+        selectedTime: formattedTime
+      }
     });
   };
 
@@ -131,7 +132,7 @@ function ReservationPage() {
         />
       </CalendarWrapper>
       {operatingHours.map((time, index) => (
-        <TimeBlock key={index} onClick={() => handleBlockClick(index + 1)}>
+        <TimeBlock key={index} onClick={() => handleBlockClick(time)}>
           {time[0].start} - {time[1].end}
         </TimeBlock>
       ))}

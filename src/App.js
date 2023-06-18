@@ -97,16 +97,31 @@ const App = () => {
                             />} />
                         <Route
                             path="/checkReservation"
-                            element={<CheckReservation />}
+                            element={
+                                <CheckReservation
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />}
                         />
                         <Route
                             path="/confirmation"
-                            element={<Confirmation />}
+                            element={
+                                <Confirmation
+                                    isLoggedIn={isLoggedIn}
+                                    onLogout={handleLogout}
+                                />}
                         />
-                        <Route path="/payment" element={<Payment />} />
+                        <Route path="/payment" element={
+                            <Payment
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />} />
                         <Route
                             path="/reservationComplete"
-                            element={<ReservationComplete />}
+                            element={<ReservationComplete
+                                isLoggedIn={isLoggedIn}
+                                onLogout={handleLogout}
+                            />}
                         />
                         <Route
                             path="/mypage"

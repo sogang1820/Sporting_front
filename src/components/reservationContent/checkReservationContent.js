@@ -50,19 +50,11 @@ const PayButton = styled.button`
 function CheckPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const { name, address, price, image } = location.state || {};
+  const { name, address, price, image, selectedDate, selectedTime } = location.state || {};
 
-  const [userPoints, setUserPoints] = useState(100000);
+  const [userPoints, setUserPoints] = useState();
   const currentPoints = userPoints;
   const requiredPoints = price - userPoints;
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    setSelectedDate(searchParams.get('date'));
-    setSelectedTime(searchParams.get('time'));
-  }, [location.search]);
 
   const handlePayment = () => {
     console.log('Pay button clicked.');
@@ -92,6 +84,7 @@ function CheckPage() {
       });
     }
   };
+
   return (
     <CenteredWrapper>
       <InfoBlock>
@@ -100,7 +93,7 @@ function CheckPage() {
         <p>{address}</p>
         <p>{selectedDate}</p>
         <p>{selectedTime}</p>
-        <p>{price.endsWith('원') ? price : `${price}원`}</p>
+        <p>{price}</p>
         <br></br>
         <br></br>
         <p>보유 포인트: {userPoints}원</p>
