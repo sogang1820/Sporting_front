@@ -33,18 +33,18 @@ const Image = styled.img`
 `;
 
 function ConfirmationSection({ image, name, address, selectedDate, selectedTime, price }) {
-    return (
-        <CenteredWrapper>
-            <InfoBlock>
-                <Image src={image} alt="stadium image" />
-                <h2>{name}</h2>
-                <p>{address}</p>
-                <p>{selectedDate}</p>
-                <p>{selectedTime}</p>
-                <p>{price}</p>
-            </InfoBlock>
-        </CenteredWrapper>
-    );
+  return (
+    <CenteredWrapper>
+      <InfoBlock>
+        <Image src={image} alt="stadium image" />
+        <h2>{name}</h2>
+        <p>{address}</p>
+        <p>{selectedDate}</p>
+        <p>{selectedTime}</p>
+        <p>{price}</p>
+      </InfoBlock>
+    </CenteredWrapper>
+  );
 }
 
 export default ConfirmationSection;

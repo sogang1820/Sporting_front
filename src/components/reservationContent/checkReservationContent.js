@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const InfoBlock = styled.div`
@@ -17,7 +17,7 @@ const InfoBlock = styled.div`
   font-size: 18px;
 
   p {
-    margin: 10px 0;  // Adjust this value to your liking.
+    margin: 10px 0;
   }
 `;
 
@@ -48,35 +48,70 @@ const PayButton = styled.button`
 `;
 
 function CheckPage() {
-    const location = useLocation();
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTime, setSelectedTime] = useState('');
-    const { name, address, price, image } = location.state || {};
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const { name, address, price, image } = location.state || {};
 
-    useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        setSelectedDate(searchParams.get('date'));
-        setSelectedTime(searchParams.get('time'));
-    }, [location.search]);
+  const [userPoints, setUserPoints] = useState(1000);
+  const currentPoints = userPoints;
+  const requiredPoints = price - userPoints;
 
-    const handlePayment = () => {
-        // Payment logic goes here
-        console.log('Pay button clicked.');
-    };
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setSelectedDate(searchParams.get('date'));
+    setSelectedTime(searchParams.get('time'));
+  }, [location.search]);
 
-    return (
-        <CenteredWrapper>
-            <InfoBlock>
-                <Image src={image} alt="stadium image" />
-                <h2>{name}</h2>
-                <p>{address}</p>
-                <p>{selectedDate}</p>
-                <p>{selectedTime}</p>
-                <p>{price}</p>
-                <PayButton onClick={handlePayment}>결제하기</PayButton>
-            </InfoBlock>
-        </CenteredWrapper>
-    );
+  const handlePayment = () => {
+    console.log('Pay button clicked.');
+
+    if (requiredPoints > 0) {
+      navigate('/payment', {
+        state: {
+          name,
+          address,
+          selectedDate,
+          selectedTime,
+          price,
+          currentPoints,
+          requiredPoints
+        }
+      });
+    } else {
+      navigate('/reservationComplete', {
+        state: {
+          image,
+          name,
+          address,
+          price,
+          selectedDate,
+          selectedTime
+        }
+      });
+    }
+  };
+  return (
+    <CenteredWrapper>
+      <InfoBlock>
+        <Image src={image} alt="stadium image" />
+        <h2>{name}</h2>
+        <p>{address}</p>
+        <p>{selectedDate}</p>
+        <p>{selectedTime}</p>
+        <p>{price.endsWith('원') ? price : `${price}원`}</p>
+        <br></br>
+        <br></br>
+        <p>보유 포인트: {userPoints}원</p>
+        <p>부족 포인트: {requiredPoints > 0 ? requiredPoints : 0}원</p>
+        {requiredPoints > 0 ? (
+          <PayButton onClick={handlePayment}>충전하기</PayButton>
+        ) : (
+          <PayButton onClick={handlePayment}>결제하기</PayButton>
+        )}      </InfoBlock>
+    </CenteredWrapper>
+  );
 }
 
 export default CheckPage;

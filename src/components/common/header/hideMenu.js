@@ -19,22 +19,27 @@ const HideMenu = ({ isLoggedIn, onLogout }) => {
         dispatch(logoutSuccess());
         setMenuVisible(!isMenuVisible);
         navigate("/");
+        toggleMenu();
     };
     const handleMenuMyPageClick = () => {
         navigate("/mypage");
+        toggleMenu();
     };
     const toggleMenu = () => {
         setMenuVisible(!isMenuVisible);
     };
     const navigateToBaseBallPage = () => {
-        navigate("/board");
+        navigate("/stadiums?sports_category=baseball");
+        toggleMenu();
     };
     const navigateToBasketBallPage = () => {
-        navigate("/board");
+        navigate("/stadiums?sports_category=basketball");
+        toggleMenu();
     };
 
     const navigateToFutsalPage = () => {
-        navigate("/board");
+        navigate("/stadiums?sports_category=futsal");
+        toggleMenu();
     };
 
     return (
