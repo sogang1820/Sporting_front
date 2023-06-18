@@ -55,7 +55,7 @@ const Title = styled.h1`
 const Complete = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { image, name, address, selectedDate, selectedTime } = location.state || {};
+    const { stadium_img, stadium_name, stadium_location, stadium_info, selectedDate, selectedTime } = location.state || {};
 
     const handleGoToMyPage = () => {
         navigate('/mypage');
@@ -67,13 +67,13 @@ const Complete = () => {
                 <Title>예약 완료</Title>
                 <br></br>
                 <br></br>
-                <Image src={image} alt="stadium image" />
+                <Image src={stadium_img} alt="stadium image" />
                 <br />
                 <br />
-                <h2>{name}</h2>
-                <p>{address}</p>
-                <p>{selectedDate}</p>
-                <p>{selectedTime}</p>
+                <h2>{stadium_name}</h2>
+                <p>{stadium_location}</p>
+                <p>날짜: {selectedDate}</p>
+                <p>시간: {selectedTime}</p>
                 <MypageButton onClick={handleGoToMyPage}>마이페이지로 가기</MypageButton>
             </InfoBlock>
         </CenteredWrapper>

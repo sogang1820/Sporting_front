@@ -106,7 +106,7 @@ const handlePayment = () => {
         stadium_name: stadium.stadium_name,
         stadium_location: stadium.stadium_location,
         selectedDate: date,
-        selectedTime: time,
+        selectedTime: selectedTime,
         stadium_price: stadium.stadium_price,
         points: stadium.points
       }
@@ -121,7 +121,7 @@ const handlePayment = () => {
         stadium_price: stadium.stadium_price,
         stadium_info: stadium.stadium_info,
         selectedDate: date,
-        selectedTime: time
+        selectedTime: selectedTime
       }
     });
   }
