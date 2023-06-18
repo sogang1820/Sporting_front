@@ -6,32 +6,35 @@ import Futsal from "../../assets/img/futsal.jpg";
 import styled from "styled-components";
 
 const circlesData = [
-  { image: Baseball, value: "baseball", label: "야구" },
-  { image: Basketball, value: "basketball", label: "농구" },
-  { image: Futsal, value: "futsal", label: "풋살" },
+    { image: Baseball, value: "baseball", label: "야구" },
+    { image: Basketball, value: "basketball", label: "농구" },
+    { image: Futsal, value: "futsal", label: "풋살" },
 ];
 
 const MainContentWrapper = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const handleCircleClick = (value) => {
     navigate(`/stadiums?sports_category=${value}`);
   };
 
-  return (
-    <Wrapper>
-      {circlesData.map((circle, index) => (
-        <Circle key={index} onClick={() => handleCircleClick(circle.value)}>
-          <CircleImage className={circle.label.toLowerCase()}>
-            <img src={circle.image} alt={circle.label} />
-          </CircleImage>
-          <Overlay>
-            <Label>{circle.label}</Label>
-          </Overlay>
-        </Circle>
-      ))}
-    </Wrapper>
-  );
+    return (
+        <Wrapper>
+            {circlesData.map((circle, index) => (
+                <Circle
+                    key={index}
+                    onClick={() => handleCircleClick(circle.value)}
+                >
+                    <CircleImage className={circle.label.toLowerCase()}>
+                        <img src={circle.image} alt={circle.label} />
+                    </CircleImage>
+                    <Overlay>
+                        <Label>{circle.label}</Label>
+                    </Overlay>
+                </Circle>
+            ))}
+        </Wrapper>
+    );
 };
 
 export default MainContentWrapper;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -20,36 +20,36 @@ const SearchBlock = styled.div`
 `;
 
 const SelectWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 16px;
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
 `;
 
 const SelectBox = styled.select`
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-right: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background-color: #ffffff;
-  color: #000000;
-  font-size: 14px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
 `;
 
 const InputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 16px;
-  margin-top: 16px;
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+    margin-top: 16px;
 `;
 
 const Input = styled.input`
-  padding: 4px;
-  border: none;
-  border-bottom: 1px solid #000000;
-  background-color: #F8F6F4;
-  color: #000000;
-  font-size: 14px;
+    padding: 4px;
+    border: none;
+    border-bottom: 1px solid #000000;
+    background-color: #f8f6f4;
+    color: #000000;
+    font-size: 14px;
 `;
 
 const SearchButton = styled.button`
@@ -66,20 +66,20 @@ const SearchButton = styled.button`
 `;
 
 function SearchPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-  const [sports_category, setSport] = useState('');
-  const [stadium_location, setRegion] = useState('');
-  const [reservation, setReservation] = useState('all');
-  const [stadium_name, setStadiumName] = useState('');
+    const [sports_category, setSport] = useState("");
+    const [stadium_location, setRegion] = useState("");
+    const [reservation, setReservation] = useState("all");
+    const [stadium_name, setStadiumName] = useState("");
 
-  useEffect(() => {
-    const parsed = queryString.parse(location.search);
-    if (parsed.sports_category) {
-      setSport(parsed.sports_category);
-    }
-  }, [location]);
+    useEffect(() => {
+        const parsed = queryString.parse(location.search);
+        if (parsed.sports_category) {
+            setSport(parsed.sports_category);
+        }
+    }, [location]);
 
   const handleClickRadioButton1 = (e) => {
     console.log(e.target.value);
@@ -97,17 +97,17 @@ function SearchPage() {
     setRegion(e.target.value);
   };
 
-  const handleStadiumNameChange = (e) => {
-    setStadiumName(e.target.value);
-  };
+    const handleStadiumNameChange = (e) => {
+        setStadiumName(e.target.value);
+    };
 
-  const handleSearch = () => {
-    const query = queryString.stringify({
-      sports_category,
-      stadium_location,
-      stadium_name,
-      reservation,
-    });
+    const handleSearch = () => {
+        const query = queryString.stringify({
+            sports_category,
+            stadium_location,
+            stadium_name,
+            reservation,
+        });
 
     axios
       .get(`http://localhost:8000/stadiums?${query}`)
